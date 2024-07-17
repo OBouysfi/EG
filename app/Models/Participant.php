@@ -11,7 +11,7 @@ class Participant extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'centre_id', 'nom_prenom', 'numero_cin', 'date_naissance', 'ville_naissance', 'adresse', 'ville_centre', 'telephone', 'categorie', 'montant_inscription', 'commercial', 'etat', 'reste'
+        'centre_id', 'status','nom_prenom', 'numero_cin', 'date_naissance', 'ville_naissance', 'adresse', 'ville_centre', 'telephone', 'categorie', 'montant_inscription', 'commercial', 'etat', 'reste'
     ];
 
     public function centre()
