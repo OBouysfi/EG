@@ -13,9 +13,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        SuperAdminSeeder::class,
+        $this->call([
         RolesAndPermissionsSeeder::class,
-
+        RegionsTableSeeder::class,
+        SuperAdminSeeder::class
+    ]);
     }
 }
