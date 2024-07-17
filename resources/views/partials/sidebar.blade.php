@@ -19,12 +19,12 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item">
-                            <a href="" class="sidebar-link">
-                                <span class="hide-menu">Voir les Régions</span>
+                            <a class="sidebar-link">
+                                <span class="hide-menu">Liste des Régions</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="" class="sidebar-link">
+                            <a class="sidebar-link">
                                 <span class="hide-menu">Ajouter une Région</span>
                             </a>
                         </li>
@@ -37,12 +37,12 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item">
-                            <a href="" class="sidebar-link">
-                                <span class="hide-menu">Voir les Centres</span>
+                            <a class="sidebar-link">
+                                <span class="hide-menu">Liste des Centres</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="" class="sidebar-link">
+                            <a class="sidebar-link">
                                 <span class="hide-menu">Ajouter un Centre</span>
                             </a>
                         </li>
@@ -55,12 +55,12 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item">
-                            <a href="" class="sidebar-link">
-                                <span class="hide-menu">Voir les Participants</span>
+                            <a class="sidebar-link">
+                                <span class="hide-menu">Liste des Participants</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="" class="sidebar-link">
+                            <a class="sidebar-link">
                                 <span class="hide-menu">Ajouter un Participant</span>
                             </a>
                         </li>
@@ -73,13 +73,31 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item">
-                            <a href="" class="sidebar-link">
-                                <span class="hide-menu">Voir les Attestations</span>
+                            <a class="sidebar-link">
+                                <span class="hide-menu">Liste des Attestations</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a href="" class="sidebar-link">
+                            <a class="sidebar-link">
                                 <span class="hide-menu">Ajouter une Attestation</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link has-arrow" href="javascript:void(0)" aria-expanded="false">
+                        <i data-feather="dollar-sign" class="feather-icon"></i>
+                        <span class="hide-menu">Suivi Paiements</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse first-level base-level-line">
+                        <li class="sidebar-item">
+                            <a class="sidebar-link">
+                                <span class="hide-menu">Liste des Paiements</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link">
+                                <span class="hide-menu">Ajouter un Paiement</span>
                             </a>
                         </li>
                     </ul>
