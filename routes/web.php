@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RegionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -43,3 +44,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');
 
+Route::get('regions/listes', [RegionController::class, 'index'])->name('regions.index');
+Route::get('regions/data', [RegionController::class, 'data'])->name('regions.data');
+
+Route::resource('regions', RegionController::class)->except(['index']);
