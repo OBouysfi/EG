@@ -38,7 +38,11 @@
 </style>
 
 @section('content')
-<div class="container" style="margin-top: 100px !important;">
+
+    <div class="page-wrapper">
+
+        <div class="container-fluid">
+        <div class="col-12">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
             <h3 class="mb-0 text-dark">Liste des Centres</h3>
@@ -66,6 +70,8 @@
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 
 <!-- Modal pour modifier un centre -->
