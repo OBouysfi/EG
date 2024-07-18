@@ -8,7 +8,8 @@ use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\PaiementController;
 use Illuminate\Support\Facades\Route;
-
+use App\Exports\RegionsExport;
+use Maatwebsite\Excel\Facades\Excel;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +54,7 @@ Route::middleware(['auth'])->prefix('regions')->name('regions.')->group(function
     Route::put('{region}', [RegionController::class, 'update'])->name('update');
     Route::delete('{region}', [RegionController::class, 'destroy'])->name('destroy');
 });
+Route::get('regions/export', [RegionController::class, 'export'])->name('regions.export');
 
 // Centres Crud
 Route::middleware(['auth'])->prefix('centres')->name('centres.')->group(function () {

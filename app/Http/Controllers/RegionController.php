@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\RegionsExport;
 use App\Http\Requests\StoreRegionRequest;
 use App\Http\Requests\UpdateRegionRequest;
 use App\Models\Region;
-use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 class RegionController extends Controller
 {
     public function index()
@@ -60,5 +63,39 @@ class RegionController extends Controller
         $region->delete();
 
         return response()->json(['message' => 'Région supprimée avec succès']);
+    }
+
+    public function export()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Nom');
+        $sheet->setCellValue('C1', 'Créé le');
+        $sheet->setCellValue('D1', 'Mis à jour le');
+
+        $regions = Region::all();
+        $row = 2;
+
+        foreach ($regions as $region) {
+            $sheet->setCellValue('A' . $row, $region->id);
+            $sheet->setCellValue('B' . $row, $region->name);
+            $sheet->setCellValue('C' . $row, $region->created_at);
+            $sheet->setCellValue('D' . $row, $region->updated_at);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'regions.xlsx';
+
+        $response = new StreamedResponse(function() use ($writer) {
+            $writer->save('php://output');
+        });
+
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
+        $response->headers->set('Cache-Control', 'max-age=0');
+
+        return $response;
     }
 }
