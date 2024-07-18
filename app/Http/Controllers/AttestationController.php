@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Participant;
 use Illuminate\Http\Request;
 
 class AttestationController extends Controller
@@ -80,5 +81,10 @@ class AttestationController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function print($participantId)
+    {
+        $participant = Participant::findOrFail($participantId);
+        return view('attestations.print', compact('participant'));
     }
 }

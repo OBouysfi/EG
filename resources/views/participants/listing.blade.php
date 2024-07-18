@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('title', 'Liste des Participants')
     
 <style>
@@ -41,48 +40,50 @@
 @section('content')
 <div class="page-wrapper">
     <div class="container-fluid">
-    
+
         <div class="row">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="mb-0 text-dark">Liste des Participants</h3>
-            <div>
-                <a href="{{ route('participants.create') }}" class="btn btn-primary" style="background: #004F6D !important;">
-                    <i class="fa fa-plus"></i> Ajouter
-                </a>
-                <button class="btn btn-secondary" style="background: #003F49;" onclick="window.location.href='{{ route('participants.export') }}'">
-                    <i class="fa fa-download"></i> Télécharger
-                </button>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="participants-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Nom et Prénom</th>
-                            <th scope="col">Numéro CIN</th>
-                            <th scope="col">Date de Naissance</th>
-                            <th scope="col">Ville de Naissance</th>
-                            <th scope="col">Adresse</th>
-                            <th scope="col">Ville de Centre</th>
-                            <th scope="col">Téléphone</th>
-                            <th scope="col">Catégorie</th>
-                            <th scope="col">Montant Inscription</th>
-                            <th scope="col">Commercial</th>
-                            <th scope="col">État</th>
-                            <th scope="col">Reste</th>
-                            <th scope="col">Centre</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                </table>
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0 text-dark">Liste des Participants</h3>
+                    <div>
+                        <a href="{{ route('participants.create') }}" class="btn btn-primary"
+                            style="background: #004F6D !important;">
+                            <i class="fa fa-plus"></i> Ajouter
+                        </a>
+                        <button class="btn btn-secondary" style="background: #003F49;"
+                            onclick="window.location.href='{{ route('participants.export') }}'">
+                            <i class="fa fa-download"></i> Télécharger
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="participants-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Nom et Prénom</th>
+                                    <th scope="col">Numéro CIN</th>
+                                    <th scope="col">Date de Naissance</th>
+                                    <th scope="col">Ville de Naissance</th>
+                                    <th scope="col">Adresse</th>
+                                    <th scope="col">Ville de Centre</th>
+                                    <th scope="col">Téléphone</th>
+                                    <th scope="col">Catégorie</th>
+                                    <th scope="col">Montant Inscription</th>
+                                    <th scope="col">Commercial</th>
+                                    <th scope="col">État</th>
+                                    <th scope="col">Reste</th>
+                                    <th scope="col">Centre</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 </div>
 
 @include('participants.edit')
@@ -118,10 +119,14 @@ $(document).ready(function() {
                     '<i class="fa fa-edit"></i></button>' +
                     '<button type="button" class="btn btn-danger btn-sm" onclick="deleteParticipant(' + row.id + ')">' +
                     '<i class="fa fa-trash"></i></button>' +
-                    '<button type="button" class="btn btn-success btn-sm" onclick="addPaiement(' + row.id + ')">' +
-                    '<i class="fa fa-dollar-sign"></i></button></div>';
+                    '<button type="button" class="btn btn-success btn-sm" onclick="addPayment(' + row.id + ')">' +
+                    '<i class="fa fa-dollar-sign"></i></button>' +
+                    '<button type="button" class="btn btn-info btn-sm" onclick="printDiplome(' + row.id + ')">' +
+                    '<i class="fa fa-graduation-cap"></i></button>' +
+                    '<button type="button" class="btn btn-secondary btn-sm" onclick="printAttestation(' + row.id + ')">' +
+                    '<i class="fa fa-certificate"></i></button></div>';
             }}
-],
+        ],
         language: {
             "emptyTable": "Aucune donnée disponible",
             "info": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
@@ -146,6 +151,7 @@ $(document).ready(function() {
         }
     });
 
+    // Form submission for editing a participant
     $('#editParticipantForm').on('submit', function(e) {
         e.preventDefault();
         var id = $('#editParticipantModal').data('id');
@@ -263,6 +269,14 @@ function editParticipant(participantId) {
 function addPayment(participantId) {
     $('#addPaymentForm').find('input[name="participant_id"]').val(participantId);
     $('#addPaymentModal').modal('show');
+}
+
+function printDiplome(participantId) {
+    window.location.href = '/diplomes/' + participantId + '/print';
+}
+
+function printAttestation(participantId) {
+    window.location.href = '/attestations/' + participantId + '/print';
 }
 </script>
 @endsection

@@ -1,14 +1,15 @@
+<!-- resources/views/participants/paiement.blade.php -->
 <div class="modal fade" id="addPaymentModal" tabindex="-1" role="dialog" aria-labelledby="addPaymentModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addPaymentModalLabel">Ajouter Paiement</h5>
+                <h5 class="modal-title" id="addPaymentModalLabel">Ajouter un Paiement</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addPaymentForm">
+                <form id="addPaymentForm" method="POST">
                     @csrf
                     <input type="hidden" name="participant_id">
                     <div class="form-group">

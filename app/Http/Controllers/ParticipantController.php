@@ -70,24 +70,19 @@ class ParticipantController extends Controller
         return response()->json(['message' => 'Participant supprimé avec succès']);
     }
 
-    public function storePaiement(Request $request, Participant $participant)
-    {
-        $request->validate([
-            'seance' => 'required|string',
-            'montant' => 'required|numeric',
-            'date_paiement' => 'required|date',
-        ]);
+        public function storePaiement(Request $request, Participant $participant)
+        {
+            $validated = $request->validate([
+                'seance' => 'required|string',
+                'montant' => 'required|numeric',
+                'date_paiement' => 'required|date',
+            ]);
 
-        $paiement = new Paiement([
-            'seance' => $request->seance,
-            'montant' => $request->montant,
-            'date_paiement' => $request->date_paiement,
-        ]);
+            $participant->paiements()->create($validated);
 
-        $participant->paiements()->save($paiement);
+            return redirect()->route('participants.index')->with('success', 'Paiement ajouté avec succès');
+        }
 
-        return response()->json(['message' => 'Paiement ajouté avec succès']);
-    }
 
     public function export()
     {

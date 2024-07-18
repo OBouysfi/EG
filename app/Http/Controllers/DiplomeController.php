@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Participant;
 use Illuminate\Http\Request;
 
 class DiplomeController extends Controller
@@ -80,5 +81,11 @@ class DiplomeController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function print($participantId)
+    {
+        $participant = Participant::findOrFail($participantId);
+        return view('diplomes.print', compact('participant'));
     }
 }

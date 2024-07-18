@@ -9,6 +9,8 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\PaiementController;
 use Illuminate\Support\Facades\Route;
 use App\Exports\RegionsExport;
+use App\Http\Controllers\AttestationController;
+use App\Http\Controllers\DiplomeController;
 use Maatwebsite\Excel\Facades\Excel;
 /*
 |--------------------------------------------------------------------------
@@ -94,4 +96,13 @@ Route::middleware(['auth'])->prefix('paiements')->name('paiements.')->group(func
     Route::get('{paiement}/edit', [PaiementController::class, 'edit'])->name('edit');
     Route::put('{paiement}', [PaiementController::class, 'update'])->name('update');
     Route::delete('{paiement}', [PaiementController::class, 'destroy'])->name('destroy');
+});
+
+
+Route::middleware(['auth'])->prefix('diplomes')->name('diplomes.')->group(function () {
+    Route::get('{participant}/print', [DiplomeController::class, 'print'])->name('print');
+});
+
+Route::middleware(['auth'])->prefix('attestations')->name('attestations.')->group(function () {
+    Route::get('{participant}/print', [AttestationController::class, 'print'])->name('print');
 });
