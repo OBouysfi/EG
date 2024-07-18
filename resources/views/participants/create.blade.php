@@ -10,16 +10,16 @@
             <form action="{{ route('participants.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
+                    <label for="nom_prenom">Nom et Prénom</label>
+                    <input type="text" class="form-control" id="nom_prenom" name="nom_prenom" required>
+                </div>
+                <div class="form-group">
                     <label for="centre_id">Centre</label>
                     <select class="form-control" id="centre_id" name="centre_id" required>
                         @foreach($centres as $centre)
-                            <option value="{{ $centre->id }}">{{ $centre->name }}</option>
+                            <option value="{{ $centre->id }}">{{ $centre->nom }}</option>
                         @endforeach
                     </select>
-                </div>
-                <div class="form-group">
-                    <label for="nom_prenom">Nom et Prénom</label>
-                    <input type="text" class="form-control" id="nom_prenom" name="nom_prenom" required>
                 </div>
                 <div class="form-group">
                     <label for="numero_cin">Numéro CIN</label>
@@ -38,7 +38,7 @@
                     <input type="text" class="form-control" id="adresse" name="adresse" required>
                 </div>
                 <div class="form-group">
-                    <label for="ville_centre">Ville du Centre</label>
+                    <label for="ville_centre">Ville de Centre</label>
                     <input type="text" class="form-control" id="ville_centre" name="ville_centre" required>
                 </div>
                 <div class="form-group">

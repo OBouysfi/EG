@@ -47,7 +47,8 @@ class ParticipantController extends Controller
 
     public function edit(Participant $participant)
     {
-        return view('participants.edit', compact('participant'));
+        $centres = Centre::all();
+        return view('participants.edit', compact('participant', 'centres'));
     }
 
     public function update(UpdateParticipantRequest $request, Participant $participant)

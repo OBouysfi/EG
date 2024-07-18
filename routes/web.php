@@ -71,13 +71,14 @@ Route::middleware(['auth'])->prefix('centres')->name('centres.')->group(function
      Route::post('/', [CentreController::class, 'store'])->name('store');
  });
  
-
- Route::middleware(['auth'])->prefix('participants')->name('participants.')->group(function () {
-     Route::get('listes', [ParticipantController::class, 'index'])->name('index');
-     Route::get('data', [ParticipantController::class, 'data'])->name('data');
-     Route::get('create', [ParticipantController::class, 'create'])->name('create');
-     Route::post('/', [ParticipantController::class, 'store'])->name('store');
-     Route::get('{participant}/edit', [ParticipantController::class, 'edit'])->name('edit');
-     Route::put('{participant}', [ParticipantController::class, 'update'])->name('update');
-     Route::delete('{participant}', [ParticipantController::class, 'destroy'])->name('destroy');
- });
+ Route::middleware(['auth'])->group(function () {
+    Route::prefix('participants')->name('participants.')->group(function () {
+        Route::get('listes', [ParticipantController::class, 'index'])->name('index');
+        Route::get('data', [ParticipantController::class, 'data'])->name('data');
+        Route::get('create', [ParticipantController::class, 'create'])->name('create');
+        Route::post('/', [ParticipantController::class, 'store'])->name('store');
+        Route::get('{participant}/edit', [ParticipantController::class, 'edit'])->name('edit');
+        Route::put('{participant}', [ParticipantController::class, 'update'])->name('update');
+        Route::delete('{participant}', [ParticipantController::class, 'destroy'])->name('destroy');
+    });
+});

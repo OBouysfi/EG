@@ -15,7 +15,6 @@
                     <div class="form-group">
                         <label for="centre_id">Centre</label>
                         <select class="form-control" id="centre_id" name="centre_id" required>
-                            <!-- Options des centres -->
                         </select>
                     </div>
                     <div class="form-group">

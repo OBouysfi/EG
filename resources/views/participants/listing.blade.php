@@ -31,7 +31,7 @@
         color: #fff;
         border: 1px solid #ddd;
         border-radius: 20px;
-        padding: 20px 15px;
+        padding: 5px 10px;
     }
 </style>
 
@@ -56,18 +56,18 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nom et Prénom</th>
-                            <th scope="col">Centre</th>
                             <th scope="col">Numéro CIN</th>
                             <th scope="col">Date de Naissance</th>
                             <th scope="col">Ville de Naissance</th>
                             <th scope="col">Adresse</th>
-                            <th scope="col">Ville du Centre</th>
+                            <th scope="col">Ville de Centre</th>
                             <th scope="col">Téléphone</th>
                             <th scope="col">Catégorie</th>
                             <th scope="col">Montant Inscription</th>
                             <th scope="col">Commercial</th>
                             <th scope="col">État</th>
                             <th scope="col">Reste</th>
+                            <th scope="col">Centre</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -92,7 +92,6 @@ $(document).ready(function() {
         columns: [
             { data: 'id', name: 'id' },
             { data: 'nom_prenom', name: 'nom_prenom' },
-            { data: 'centre', name: 'centre' },
             { data: 'numero_cin', name: 'numero_cin' },
             { data: 'date_naissance', name: 'date_naissance' },
             { data: 'ville_naissance', name: 'ville_naissance' },
@@ -104,7 +103,14 @@ $(document).ready(function() {
             { data: 'commercial', name: 'commercial' },
             { data: 'etat', name: 'etat' },
             { data: 'reste', name: 'reste' },
-            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+            { data: 'centre.nom', name: 'centre.nom' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
+                return '<div class="btn-group" role="group">' +
+                    '<button type="button" class="btn btn-warning btn-sm" onclick="editParticipant(' + row.id + ')">' +
+                    '<i class="fa fa-edit"></i></button>' +
+                    '<button type="button" class="btn btn-danger btn-sm" onclick="deleteParticipant(' + row.id + ')">' +
+                    '<i class="fa fa-trash"></i></button></div>';
+                }}
         ],
         language: {
             "emptyTable": "Aucune donnée disponible",
@@ -134,16 +140,12 @@ $(document).ready(function() {
     $('#editParticipantForm').on('submit', function(e) {
         e.preventDefault();
         var id = $('#editParticipantModal').data('id');
-        var name = $('#nom_prenom').val();
+        var formData = $(this).serialize();
 
         $.ajax({
             url: '/participants/' + id,
             type: 'PUT',
-            data: {
-                _token: '{{ csrf_token() }}',
-                nom_prenom: name,
-                // other fields...
-            },
+            data: formData,
             success: function(response) {
                 $('#editParticipantModal').modal('hide');
                 Swal.fire({
@@ -217,8 +219,9 @@ function editParticipant(participantId) {
         url: '/participants/' + participantId + '/edit',
         type: 'GET',
         success: function(response) {
-            $('#nom_prenom').val(response.nom_prenom);
-            // other fields...
+            $('#editParticipantForm').find('input[name="nom_prenom"]').val(response.participant.nom_prenom);
+            $('#editParticipantForm').find('select[name="centre_id"]').val(response.participant.centre_id);
+            // Fill other fields similarly
             $('#editParticipantModal').data('id', participantId).modal('show');
         },
         error: function(response) {
