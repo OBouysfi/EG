@@ -115,17 +115,20 @@ $(document).ready(function() {
             { data: 'centre', name: 'centre' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
                 return '<div class="btn-group" role="group">' +
-                    '<button type="button" class="btn btn-warning btn-sm" onclick="editParticipant(' + row.id + ')">' +
-                    '<i class="fa fa-edit"></i></button>' +
-                    '<button type="button" class="btn btn-danger btn-sm" onclick="deleteParticipant(' + row.id + ')">' +
-                    '<i class="fa fa-trash"></i></button>' +
-                    '<button type="button" class="btn btn-success btn-sm" onclick="addPayment(' + row.id + ')">' +
-                    '<i class="fa fa-dollar-sign"></i></button>' +
-                    '<button type="button" class="btn btn-info btn-sm" onclick="printDiplome(' + row.id + ')">' +
-                    '<i class="fa fa-graduation-cap"></i></button>' +
+                    '<button type="button" class="btn btn-warning btn-sm me-2" onclick="editParticipant(' + row.id + ')">' +
+                    '<i class="fa fa-edit"></i> Modifier</button>' +
+                    '<button type="button" class="btn btn-danger btn-sm me-2" onclick="deleteParticipant(' + row.id + ')">' +
+                    '<i class="fa fa-trash"></i> Supprimer</button>' +
+                    '<button type="button" class="btn btn-success btn-sm me-2" onclick="addPayment(' + row.id + ')">' +
+                    '<i class="fa fa-dollar-sign"></i> Ajouter Paiement</button>' +
+                    '<button type="button" class="btn btn-info btn-sm me-2" onclick="printDiplome(' + row.id + ')">' +
+                    '<i class="fa fa-graduation-cap"></i> Imprimer Diplôme</button>' +
                     '<button type="button" class="btn btn-secondary btn-sm" onclick="printAttestation(' + row.id + ')">' +
-                    '<i class="fa fa-certificate"></i></button></div>';
+                    '<i class="fa fa-certificate"></i> Imprimer Attestation</button>' +
+                '</div>';
             }}
+
+
         ],
         language: {
             "emptyTable": "Aucune donnée disponible",
