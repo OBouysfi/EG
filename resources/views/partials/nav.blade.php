@@ -169,8 +169,7 @@
                     <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('assets/images/users/othman.jpeg') }}" alt="user" class="rounded-circle"
-                            width="50" height="50">
-                        <span class="ml-2 d-none d-lg-inline-block"><span>Bonjour,</span> <span
+                            width="50" height="50"></span> <span
                                 class="text-dark">Othman Bouysfi</span> <i data-feather="chevron-down"
                                 class="svg-icon"></i></span>
                     </a>
