@@ -78,7 +78,7 @@
 </div>
 
 @include('participants.edit')
-@include('participants.add_payment')
+@include('participants.paiement')
 
 @endsection
 
@@ -103,17 +103,16 @@ $(document).ready(function() {
             { data: 'commercial', name: 'commercial' },
             { data: 'etat', name: 'etat' },
             { data: 'reste', name: 'reste' },
-            { data: 'centre.name', name: 'centre.name' },
+            { data: 'centre', name: 'centre' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
                 return '<div class="btn-group" role="group">' +
                     '<button type="button" class="btn btn-warning btn-sm" onclick="editParticipant(' + row.id + ')">' +
                     '<i class="fa fa-edit"></i></button>' +
                     '<button type="button" class="btn btn-danger btn-sm" onclick="deleteParticipant(' + row.id + ')">' +
                     '<i class="fa fa-trash"></i></button>' +
-                    '<button type="button" class="btn btn-success btn-sm" onclick="addPaiement(' + row.id + ')">' +
-                    '<i class="fa fa-money-bill-wave"></i> Ajouter Paiement</button>' +
-                    '</div>';
-            }}
+                    '<button type="button" class="btn btn-success btn-sm" onclick="addPayment(' + row.id + ')">' +
+                    '<i class="fa fa-money-bill"></i></button></div>';
+                }}
         ],
         language: {
             "emptyTable": "Aucune donnée disponible",
@@ -162,34 +161,6 @@ $(document).ready(function() {
                     icon: 'error',
                     title: 'Erreur',
                     text: response.responseJSON.message,
-                });
-            }
-        });
-    });
-
-    $('#addPaiementForm').on('submit', function(e) {
-        e.preventDefault();
-        var participantId = $('#participantId').val();
-        var formData = $(this).serialize();
-
-        $.ajax({
-            url: '/participants/' + participantId + '/paiements',
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                $('#addPaiementModal').modal('hide');
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Succès',
-                    text: 'Paiement ajouté avec succès',
-                });
-                table.ajax.reload();
-            },
-            error: function(response) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur',
-                    text: 'Une erreur est survenue',
                 });
             }
         });
@@ -281,9 +252,9 @@ function editParticipant(participantId) {
     });
 }
 
-function addPaiement(participantId) {
-    $('#participantId').val(participantId);
-    $('#addPaiementModal').modal('show');
+function addPayment(participantId) {
+    $('#addPaymentForm').find('input[name="participant_id"]').val(participantId);
+    $('#addPaymentModal').modal('show');
 }
 </script>
 @endsection

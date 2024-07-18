@@ -10,20 +10,20 @@
             <div class="navbar-brand">
                 <!-- Logo icon -->
                 <a href="index.html">
-                    <b class="logo-icon">
+                    <b class="logo-icon mx-3">
                         <!-- Dark Logo icon -->
-                        <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo" />
+                        <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo mx-5" />
                         <!-- Light Logo icon -->
-                        <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="light-logo" />
+                        <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="light-logo mx-5"" />
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text -->
-                    <span class="logo-text">
+                    {{-- <span class="logo-text">
                         <!-- dark Logo text -->
                         <img src="{{ asset('assets/images/logo-text.png') }}" alt="homepage" class="dark-logo" />
                         <!-- Light Logo text -->
                         <img src="{{ asset('assets/images/logo-light-text.png') }}" class="light-logo" alt="homepage" />
-                    </span>
+                    </span> --}}
                 </a>
             </div>
             <!-- ============================================================== -->
