@@ -77,8 +77,8 @@
     </div>
 </div>
 
-<!-- Modal pour modifier un participant -->
 @include('participants.edit')
+@include('participants.add_payment')
 
 @endsection
 
@@ -103,14 +103,17 @@ $(document).ready(function() {
             { data: 'commercial', name: 'commercial' },
             { data: 'etat', name: 'etat' },
             { data: 'reste', name: 'reste' },
-            { data: 'centre.nom', name: 'centre.nom' },
+            { data: 'centre.name', name: 'centre.name' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
                 return '<div class="btn-group" role="group">' +
                     '<button type="button" class="btn btn-warning btn-sm" onclick="editParticipant(' + row.id + ')">' +
                     '<i class="fa fa-edit"></i></button>' +
                     '<button type="button" class="btn btn-danger btn-sm" onclick="deleteParticipant(' + row.id + ')">' +
-                    '<i class="fa fa-trash"></i></button></div>';
-                }}
+                    '<i class="fa fa-trash"></i></button>' +
+                    '<button type="button" class="btn btn-success btn-sm" onclick="addPaiement(' + row.id + ')">' +
+                    '<i class="fa fa-money-bill-wave"></i> Ajouter Paiement</button>' +
+                    '</div>';
+            }}
         ],
         language: {
             "emptyTable": "Aucune donnée disponible",
@@ -136,7 +139,6 @@ $(document).ready(function() {
         }
     });
 
-    // Handle form submission for editing a participant
     $('#editParticipantForm').on('submit', function(e) {
         e.preventDefault();
         var id = $('#editParticipantModal').data('id');
@@ -165,7 +167,34 @@ $(document).ready(function() {
         });
     });
 
-    // Display SweetAlert on successful participant update
+    $('#addPaiementForm').on('submit', function(e) {
+        e.preventDefault();
+        var participantId = $('#participantId').val();
+        var formData = $(this).serialize();
+
+        $.ajax({
+            url: '/participants/' + participantId + '/paiements',
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                $('#addPaiementModal').modal('hide');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succès',
+                    text: 'Paiement ajouté avec succès',
+                });
+                table.ajax.reload();
+            },
+            error: function(response) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'Une erreur est survenue',
+                });
+            }
+        });
+    });
+
     @if(session('success'))
         Swal.fire({
             icon: 'success',
@@ -175,7 +204,6 @@ $(document).ready(function() {
     @endif
 });
 
-// Function to delete a participant
 function deleteParticipant(participantId) {
     Swal.fire({
         title: 'Êtes-vous sûr?',
@@ -213,15 +241,34 @@ function deleteParticipant(participantId) {
     });
 }
 
-// Function to open edit modal and populate data
 function editParticipant(participantId) {
     $.ajax({
         url: '/participants/' + participantId + '/edit',
         type: 'GET',
         success: function(response) {
-            $('#editParticipantForm').find('input[name="nom_prenom"]').val(response.participant.nom_prenom);
-            $('#editParticipantForm').find('select[name="centre_id"]').val(response.participant.centre_id);
-            // Fill other fields similarly
+            var participant = response.participant;
+            var centres = response.centres;
+
+            $('#editParticipantForm').find('input[name="nom_prenom"]').val(participant.nom_prenom);
+            $('#editParticipantForm').find('input[name="numero_cin"]').val(participant.numero_cin);
+            $('#editParticipantForm').find('input[name="date_naissance"]').val(participant.date_naissance);
+            $('#editParticipantForm').find('input[name="ville_naissance"]').val(participant.ville_naissance);
+            $('#editParticipantForm').find('input[name="adresse"]').val(participant.adresse);
+            $('#editParticipantForm').find('input[name="ville_centre"]').val(participant.ville_centre);
+            $('#editParticipantForm').find('input[name="telephone"]').val(participant.telephone);
+            $('#editParticipantForm').find('input[name="categorie"]').val(participant.categorie);
+            $('#editParticipantForm').find('input[name="montant_inscription"]').val(participant.montant_inscription);
+            $('#editParticipantForm').find('input[name="commercial"]').val(participant.commercial);
+            $('#editParticipantForm').find('input[name="etat"]').val(participant.etat);
+            $('#editParticipantForm').find('input[name="reste"]').val(participant.reste);
+
+            var centreSelect = $('#editParticipantForm').find('select[name="centre_id"]');
+            centreSelect.empty();
+            centres.forEach(function(centre) {
+                centreSelect.append(new Option(centre.name, centre.id));
+            });
+            centreSelect.val(participant.centre_id);
+
             $('#editParticipantModal').data('id', participantId).modal('show');
         },
         error: function(response) {
@@ -232,6 +279,11 @@ function editParticipant(participantId) {
             );
         }
     });
+}
+
+function addPaiement(participantId) {
+    $('#participantId').val(participantId);
+    $('#addPaiementModal').modal('show');
 }
 </script>
 @endsection
