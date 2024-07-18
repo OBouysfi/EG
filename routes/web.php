@@ -65,6 +65,7 @@ Route::middleware(['auth'])->prefix('centres')->name('centres.')->group(function
     Route::get('{centre}/edit', [CentreController::class, 'edit'])->name('edit');
     Route::put('{centre}', [CentreController::class, 'update'])->name('update');
     Route::delete('{centre}', [CentreController::class, 'destroy'])->name('destroy');
+    Route::get('export', [CentreController::class, 'export'])->name('export');
 });
 
 // Participants Crud

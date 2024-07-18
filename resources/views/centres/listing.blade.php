@@ -46,7 +46,7 @@
                 <a href="{{ route('centres.create') }}" class="btn btn-primary" style="background: #004F6D !important;">
                     <i class="fa fa-plus"></i> Ajouter
                 </a>
-                <button class="btn btn-secondary" style="background: #003F49;">
+                <button class="btn btn-secondary" style="background: #003F49;" onclick="window.location.href='{{ route('centres.export') }}'">
                     <i class="fa fa-download"></i> Télécharger
                 </button>
             </div>
