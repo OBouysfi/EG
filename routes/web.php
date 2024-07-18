@@ -44,7 +44,7 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->middleware('auth')
                 ->name('logout');
 
-Route::get('regions/listes', [RegionController::class, 'index'])->name('regions.index');
-Route::get('regions/data', [RegionController::class, 'data'])->name('regions.data');
-
-Route::resource('regions', RegionController::class)->except(['index']);
+                Route::get('/regions/listes', [RegionController::class, 'index'])->name('regions.index');
+                Route::get('/regions/data', [RegionController::class, 'data'])->name('regions.data');
+                Route::resource('/regions', RegionController::class)->except(['index']);
+                
