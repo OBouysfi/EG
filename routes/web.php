@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\RegionController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PaiementController;
 
 /*
 |--------------------------------------------------------------------------
@@ -82,3 +83,10 @@ Route::middleware(['auth'])->prefix('centres')->name('centres.')->group(function
         Route::delete('{participant}', [ParticipantController::class, 'destroy'])->name('destroy');
     });
 });
+
+
+
+Route::post('participants/{participant}/paiements', [ParticipantController::class, 'storePaiement'])->name('participants.storePaiement');
+Route::get('paiements/{paiement}/edit', [PaiementController::class, 'edit'])->name('paiements.edit');
+Route::put('paiements/{paiement}', [PaiementController::class, 'update'])->name('paiements.update');
+Route::delete('paiements/{paiement}', [PaiementController::class, 'destroy'])->name('paiements.destroy');

@@ -17,7 +17,7 @@
                     <label for="centre_id">Centre</label>
                     <select class="form-control" id="centre_id" name="centre_id" required>
                         @foreach($centres as $centre)
-                            <option value="{{ $centre->id }}">{{ $centre->nom }}</option>
+                            <option value="{{ $centre->id }}">{{ $centre->name }}</option>
                         @endforeach
                     </select>
                 </div>
