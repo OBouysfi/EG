@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRegionRequest;
+use App\Http\Requests\UpdateRegionRequest;
 use App\Models\Region;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
+use Yajra\DataTables\Facades\DataTables;
 
 class RegionController extends Controller
 {
@@ -19,9 +20,12 @@ class RegionController extends Controller
         $regions = Region::select(['id', 'name']);
 
         return DataTables::of($regions)
-            ->addColumn('actions', function($region) {
-                return '<a href="' . route('regions.edit', $region->id) . '" class="btn btn-sm btn-primary">Modifier</a>
-                        <button class="btn btn-sm btn-danger" onclick="deleteRegion(' . $region->id . ')">Supprimer</button>';
+            ->addColumn('actions', function ($region) {
+                return '<div class="btn-group" role="group">' .
+                       '<button type="button" class="btn btn-warning btn-sm me-3" onclick="editRegion(' . $region->id . ')">' .
+                       '<i class="fa fa-edit"></i>Modifier</button>' .
+                       '<button type="button" class="btn btn-danger btn-sm" onclick="deleteRegion(' . $region->id . ')">' .
+                       '<i class="fa fa-trash"></i></button></div>';
             })
             ->rawColumns(['actions'])
             ->make(true);
@@ -34,32 +38,27 @@ class RegionController extends Controller
 
     public function store(StoreRegionRequest $request)
     {
-        $region = Region::create($request->validated());
+        Region::create($request->validated());
 
-        return redirect()->route('regions.index')->with('success', 'Région ajoutée avec succès.');
+        return redirect()->route('regions.index')->with('success', 'Région ajoutée avec succès');
     }
 
     public function edit(Region $region)
     {
-        return view('regions.edit', compact('region'));
+        return response()->json($region);
     }
 
-    public function update(Request $request, Region $region)
+    public function update(UpdateRegionRequest $request, Region $region)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+        $region->update($request->validated());
 
-        $region->update([
-            'name' => $request->name,
-        ]);
-
-        return redirect()->route('regions.index')->with('success', 'Région mise à jour avec succès!');
+        return response()->json(['message' => 'Région mise à jour avec succès']);
     }
 
     public function destroy(Region $region)
     {
         $region->delete();
-        return response()->json(['success' => 'Region deleted successfully']);
+
+        return response()->json(['message' => 'Région supprimée avec succès']);
     }
 }

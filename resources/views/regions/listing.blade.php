@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('title', 'Régions')
 
 <style>
@@ -34,9 +33,8 @@
         color: #fff;
         border: 1px solid #ddd;
         border-radius: 20px;
-        padding: 20px 15px;
-}
-  
+        padding: 5px 10px;
+    }
 </style>
 
 @section('content')
@@ -70,7 +68,29 @@
 </div>
 
 <!-- Modal pour modifier une région -->
-@include('regions.edit')
+<div class="modal fade" id="editRegionModal" tabindex="-1" aria-labelledby="editRegionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editRegionModalLabel">Modifier la Région</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="editRegionForm">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="regionName">Nom</label>
+                        <input type="text" class="form-control" id="regionName" name="name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 
@@ -84,7 +104,14 @@ $(document).ready(function() {
         columns: [
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
-            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+            { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
+                return '<div class="btn-group" role="group">' +
+                    '<button type="button" class="btn btn-warning text-white btn-sm mr-2" onclick="editRegion(' + row.id + ')">' +
+                    '<i class="fa fa-edit mr-1"></i>Modifier</button>' +
+                    '<button type="button" class="btn btn-danger btn-sm ml-2" onclick="deleteRegion(' + row.id + ')">' +
+                    '<i class="fa fa-trash mr-1"></i>Supprimer</button></div>';
+
+                }}
         ],
         language: {
             "emptyTable": "Aucune donnée disponible",
@@ -110,7 +137,6 @@ $(document).ready(function() {
         }
     });
 
-    // Handle form submission for editing a region
     $('#editRegionForm').on('submit', function(e) {
         e.preventDefault();
         var id = $('#editRegionModal').data('id');
@@ -142,7 +168,6 @@ $(document).ready(function() {
         });
     });
 
-    // Display SweetAlert on successful region update
     @if(session('success'))
         Swal.fire({
             icon: 'success',
@@ -152,7 +177,6 @@ $(document).ready(function() {
     @endif
 });
 
-// Function to delete a region
 function deleteRegion(regionId) {
     Swal.fire({
         title: 'Êtes-vous sûr?',
@@ -190,7 +214,6 @@ function deleteRegion(regionId) {
     });
 }
 
-// Function to open edit modal and populate data
 function editRegion(regionId) {
     $.ajax({
         url: '/regions/' + regionId + '/edit',
