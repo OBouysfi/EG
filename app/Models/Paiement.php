@@ -10,7 +10,7 @@ class Paiement extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['participant_id', 'montant', 'date_paiement'];
+    protected $fillable = ['participant_id','seance', 'montant', 'date_paiement'];
 
     public function participant()
     {

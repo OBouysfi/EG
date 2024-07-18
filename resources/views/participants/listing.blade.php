@@ -110,10 +110,10 @@ $(document).ready(function() {
                     '<i class="fa fa-edit"></i></button>' +
                     '<button type="button" class="btn btn-danger btn-sm" onclick="deleteParticipant(' + row.id + ')">' +
                     '<i class="fa fa-trash"></i></button>' +
-                    '<button type="button" class="btn btn-success btn-sm" onclick="addPayment(' + row.id + ')">' +
-                    '<i class="fa fa-money-bill"></i></button></div>';
-                }}
-        ],
+                    '<button type="button" class="btn btn-success btn-sm" onclick="addPaiement(' + row.id + ')">' +
+                    '<i class="fa fa-dollar-sign"></i></button></div>';
+            }}
+],
         language: {
             "emptyTable": "Aucune donnée disponible",
             "info": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",

@@ -7,26 +7,60 @@ use App\Http\Requests\UpdatePaiementRequest;
 use App\Models\Paiement;
 use App\Models\Participant;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PaiementController extends Controller
 {
-    public function store(StorePaiementRequest $request, Participant $participant)
+    public function index()
     {
-        $participant->paiements()->create($request->validated());
+        return view('paiements.listing');
+    }
 
-        return redirect()->route('participants.index')->with('success', 'Paiement ajouté avec succès');
+    public function data()
+    {
+        $paiements = Paiement::with('participant')->select('paiements.*');
+
+        return DataTables::of($paiements)
+            ->addColumn('participant', function ($paiement) {
+                return $paiement->participant->nom_prenom;
+            })
+            ->addColumn('actions', function ($paiement) {
+                return '<div class="btn-group" role="group">' .
+                       '<button type="button" class="btn btn-warning btn-sm" onclick="editPaiement(' . $paiement->id . ')">' .
+                       '<i class="fa fa-edit"></i></button>' .
+                       '<button type="button" class="btn btn-danger btn-sm" onclick="deletePaiement(' . $paiement->id . ')">' .
+                       '<i class="fa fa-trash"></i></button></div>';
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
+    }
+
+    public function create()
+    {
+        $participants = Participant::all();
+        $seances = ['S1', 'S2', 'S3', 'S4', 'Centre'];
+        return view('paiements.create', compact('participants', 'seances'));
+    }
+
+    public function store(StorePaiementRequest $request)
+    {
+        Paiement::create($request->validated());
+
+        return redirect()->route('paiements.index')->with('success', 'Paiement ajouté avec succès');
     }
 
     public function edit(Paiement $paiement)
     {
-        return view('paiements.edit', compact('paiement'));
+        $participants = Participant::all();
+        $seances = ['S1', 'S2', 'S3', 'S4', 'Centre'];
+        return view('paiements.edit', compact('paiement', 'participants', 'seances'));
     }
 
     public function update(UpdatePaiementRequest $request, Paiement $paiement)
     {
         $paiement->update($request->validated());
 
-        return redirect()->route('participants.index')->with('success', 'Paiement mis à jour avec succès');
+        return redirect()->route('paiements.index')->with('success', 'Paiement mis à jour avec succès');
     }
 
     public function destroy(Paiement $paiement)

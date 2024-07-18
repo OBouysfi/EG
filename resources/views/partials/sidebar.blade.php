@@ -55,12 +55,12 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item">
-                            <a class="sidebar-link">
+                            <a class="sidebar-link" href="{{ route('participants.index') }}">
                                 <span class="hide-menu">Liste des Participants</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link">
+                            <a class="sidebar-link" href="{{ route('participants.create') }}">
                                 <span class="hide-menu">Ajouter un Participant</span>
                             </a>
                         </li>
@@ -73,12 +73,12 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item">
-                            <a class="sidebar-link">
+                            <a class="sidebar-link" href="">
                                 <span class="hide-menu">Liste des Attestations</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link">
+                            <a class="sidebar-link" href="">
                                 <span class="hide-menu">Ajouter une Attestation</span>
                             </a>
                         </li>
@@ -91,12 +91,12 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item">
-                            <a class="sidebar-link">
+                            <a class="sidebar-link" href="{{ route('paiements.index') }}">
                                 <span class="hide-menu">Liste des Paiements</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link">
+                            <a class="sidebar-link" href="{{ route('paiements.create') }}">
                                 <span class="hide-menu">Ajouter un Paiement</span>
                             </a>
                         </li>
