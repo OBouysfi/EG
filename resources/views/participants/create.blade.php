@@ -1,8 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" style="margin-top: 100px !important;">
-    <div class="card">
+
+<div class="page-wrapper">
+
+    <div class="container-fluid">
+    <div class="col-12">
+
+ <div class="card">
         <div class="card-header">
             <h3 class="mb-0 text-dark">Ajouter un Participant</h3>
         </div>
@@ -76,5 +81,9 @@
             </form>
         </div>
     </div>
+    </div>
+ </div>
 </div>
+</div>
+
 @endsection

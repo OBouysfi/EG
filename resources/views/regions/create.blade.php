@@ -3,7 +3,11 @@
 @section('title' , 'Ajouter une région')
     
 @section('content')
-<div class="container mt-5 d-flex justify-content-center">
+<div class="page-wrapper">
+
+    <div class="container-fluid">
+    <div class="col-12">
+<div class="card">
     <div class="card" style="width: 100%; margin-top:10%;">
         <div class="card-header">
             <h4 class="text-dark">Ajouter une Région</h4>
@@ -29,5 +33,9 @@
             </form>
         </div>
     </div>
+</div>
+</div>
+</div>
+</div>
 </div>
 @endsection
