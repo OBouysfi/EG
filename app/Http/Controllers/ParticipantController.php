@@ -9,6 +9,9 @@ use App\Models\Paiement;
 use App\Models\Participant;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ParticipantController extends Controller
 {
@@ -84,5 +87,63 @@ class ParticipantController extends Controller
         $participant->paiements()->save($paiement);
 
         return response()->json(['message' => 'Paiement ajouté avec succès']);
+    }
+
+    public function export()
+    {
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setCellValue('A1', 'ID');
+        $sheet->setCellValue('B1', 'Nom et Prénom');
+        $sheet->setCellValue('C1', 'Numéro CIN');
+        $sheet->setCellValue('D1', 'Date de Naissance');
+        $sheet->setCellValue('E1', 'Ville de Naissance');
+        $sheet->setCellValue('F1', 'Adresse');
+        $sheet->setCellValue('G1', 'Ville de Centre');
+        $sheet->setCellValue('H1', 'Téléphone');
+        $sheet->setCellValue('I1', 'Catégorie');
+        $sheet->setCellValue('J1', 'Montant Inscription');
+        $sheet->setCellValue('K1', 'Commercial');
+        $sheet->setCellValue('L1', 'État');
+        $sheet->setCellValue('M1', 'Reste');
+        $sheet->setCellValue('N1', 'Centre');
+        $sheet->setCellValue('O1', 'Créé le');
+        $sheet->setCellValue('P1', 'Mis à jour le');
+
+        $participants = Participant::with('centre')->get();
+        $row = 2;
+
+        foreach ($participants as $participant) {
+            $sheet->setCellValue('A' . $row, $participant->id);
+            $sheet->setCellValue('B' . $row, $participant->nom_prenom);
+            $sheet->setCellValue('C' . $row, $participant->numero_cin);
+            $sheet->setCellValue('D' . $row, $participant->date_naissance);
+            $sheet->setCellValue('E' . $row, $participant->ville_naissance);
+            $sheet->setCellValue('F' . $row, $participant->adresse);
+            $sheet->setCellValue('G' . $row, $participant->ville_centre);
+            $sheet->setCellValue('H' . $row, $participant->telephone);
+            $sheet->setCellValue('I' . $row, $participant->categorie);
+            $sheet->setCellValue('J' . $row, $participant->montant_inscription);
+            $sheet->setCellValue('K' . $row, $participant->commercial);
+            $sheet->setCellValue('L' . $row, $participant->etat);
+            $sheet->setCellValue('M' . $row, $participant->reste);
+            $sheet->setCellValue('N' . $row, $participant->centre->name ?? 'N/A');
+            $sheet->setCellValue('O' . $row, $participant->created_at);
+            $sheet->setCellValue('P' . $row, $participant->updated_at);
+            $row++;
+        }
+
+        $writer = new Xlsx($spreadsheet);
+        $fileName = 'participants.xlsx';
+
+        $response = new StreamedResponse(function() use ($writer) {
+            $writer->save('php://output');
+        });
+
+        $response->headers->set('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $fileName . '"');
+        $response->headers->set('Cache-Control', 'max-age=0');
+
+        return $response;
     }
 }

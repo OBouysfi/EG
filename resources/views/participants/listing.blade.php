@@ -1,5 +1,8 @@
 @extends('layouts.app')
 
+
+@section('title', 'Liste des Participants')
+    
 <style>
     .btn-group-sm > .btn, .btn-sm {
         padding: .25rem .5rem;
@@ -44,7 +47,7 @@
                 <a href="{{ route('participants.create') }}" class="btn btn-primary" style="background: #004F6D !important;">
                     <i class="fa fa-plus"></i> Ajouter
                 </a>
-                <button class="btn btn-secondary" style="background: #003F49;">
+                <button class="btn btn-secondary" style="background: #003F49;" onclick="window.location.href='{{ route('participants.export') }}'">
                     <i class="fa fa-download"></i> Télécharger
                 </button>
             </div>

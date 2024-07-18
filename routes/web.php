@@ -80,6 +80,8 @@ Route::middleware(['auth'])->prefix('participants')->name('participants.')->grou
 
     // Paiements liés à un participant
     Route::post('{participant}/paiements', [ParticipantController::class, 'storePaiement'])->name('storePaiement');
+    Route::get('export', [ParticipantController::class, 'export'])->name('export');
+
 });
 
 // Paiements Crud
