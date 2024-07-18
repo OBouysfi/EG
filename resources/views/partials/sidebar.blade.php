@@ -19,12 +19,12 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item">
-                            <a class="sidebar-link">
+                            <a class="sidebar-link" href="{{ route('regions.index')}}">
                                 <span class="hide-menu">Liste des Régions</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link">
+                            <a class="sidebar-link" href="{{ route('regions.create')}}">
                                 <span class="hide-menu">Ajouter une Région</span>
                             </a>
                         </li>
@@ -37,12 +37,12 @@
                     </a>
                     <ul aria-expanded="false" class="collapse first-level base-level-line">
                         <li class="sidebar-item">
-                            <a class="sidebar-link">
+                            <a class="sidebar-link" href="{{ route('centres.index')}}">
                                 <span class="hide-menu">Liste des Centres</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
-                            <a class="sidebar-link">
+                            <a class="sidebar-link" href="{{ route('centres.create') }}">
                                 <span class="hide-menu">Ajouter un Centre</span>
                             </a>
                         </li>
@@ -113,7 +113,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ route('register') }}" aria-expanded="false">
                         <i data-feather="lock" class="feather-icon"></i>
-                        <span class="hide-menu">Register</span>
+                        <span class="hide-menu">Ajouter un administrateur</span>
                     </a>
                 </li>
                 <li class="list-divider"></li>

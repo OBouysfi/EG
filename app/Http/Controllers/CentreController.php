@@ -2,83 +2,65 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Centre;
+use App\Models\Region;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCentreRequest;
+use App\Http\Requests\UpdateCentreRequest;
+use DataTables;
 
 class CentreController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Méthode pour retourner la liste des centres pour DataTables
+    public function data()
+    {
+        $data = Centre::with('region')->select('centres.*');
+
+        return Datatables::of($data)
+            ->addColumn('actions', function($row){
+                $btn = '<a href="javascript:void(0)" onclick="editCentre('.$row->id.')" class="edit btn btn-primary btn-sm">Modifier</a>';
+                $btn .= ' <a href="javascript:void(0)" onclick="deleteCentre('.$row->id.')" class="delete btn btn-danger btn-sm">Supprimer</a>';
+                return $btn;
+            })
+            ->rawColumns(['actions'])
+            ->make(true);
+    }
+
     public function index()
     {
-        //
+        $regions = Region::all();
+        return view('centres.listing', compact('regions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        $regions = Region::all();
+        return view('centres.create', compact('regions'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(StoreCentreRequest $request)
     {
-        //
+        Centre::create($request->validated());
+
+        return redirect()->route('centres.index')->with('success', 'Centre created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function edit(Centre $centre)
     {
-        //
+        return response()->json($centre);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function update(UpdateCentreRequest $request, Centre $centre)
     {
-        //
+        $centre->update($request->validated());
+
+        return response()->json(['message' => 'Centre updated successfully.']);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function destroy(Centre $centre)
     {
-        //
-    }
+        $centre->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json(['message' => 'Centre deleted successfully.']);
     }
 }

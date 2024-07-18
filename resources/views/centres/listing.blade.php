@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
-
-@section('title', 'Régions')
-
+@section('title', 'Centres')
+    
 <style>
     .btn-group-sm > .btn, .btn-sm {
         padding: .25rem .5rem;
@@ -34,18 +33,17 @@
         color: #fff;
         border: 1px solid #ddd;
         border-radius: 20px;
-        padding: 20px 15px;
-}
-  
+        padding: 5px 15px;
+    }
 </style>
 
 @section('content')
 <div class="container" style="margin-top: 100px !important;">
     <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="mb-0 text-dark">Liste des Régions</h3>
+            <h3 class="mb-0 text-dark">Liste des Centres</h3>
             <div>
-                <a href="{{ route('regions.create') }}" class="btn btn-primary" style="background: #004F6D !important;">
+                <a href="{{ route('centres.create') }}" class="btn btn-primary" style="background: #004F6D !important;">
                     <i class="fa fa-plus"></i> Ajouter
                 </a>
                 <button class="btn btn-secondary" style="background: #003F49;">
@@ -55,11 +53,12 @@
         </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table id="regions-table" class="table table-striped table-bordered">
+                <table id="centres-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nom</th>
+                            <th scope="col">Région</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -69,21 +68,23 @@
     </div>
 </div>
 
-<!-- Modal pour modifier une région -->
-@include('regions.edit')
+<!-- Modal pour modifier un centre -->
+@include('centres.edit')
+
 
 @endsection
 
 @section('js')
 <script>
 $(document).ready(function() {
-    var table = $('#regions-table').DataTable({
+    var table = $('#centres-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('regions.data') }}",
+        ajax: "{{ route('centres.data') }}",
         columns: [
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
+            { data: 'region.name', name: 'region.name' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false }
         ],
         language: {
@@ -110,21 +111,23 @@ $(document).ready(function() {
         }
     });
 
-    // Handle form submission for editing a region
-    $('#editRegionForm').on('submit', function(e) {
+    // Handle form submission for editing a centre
+    $('#editCentreForm').on('submit', function(e) {
         e.preventDefault();
-        var id = $('#editRegionModal').data('id');
-        var name = $('#regionName').val();
+        var id = $('#editCentreModal').data('id');
+        var name = $('#centreName').val();
+        var region_id = $('#centreRegion').val();
 
         $.ajax({
-            url: '/regions/' + id,
+            url: '/centres/' + id,
             type: 'PUT',
             data: {
                 _token: '{{ csrf_token() }}',
-                name: name
+                name: name,
+                region_id: region_id
             },
             success: function(response) {
-                $('#editRegionModal').modal('hide');
+                $('#editCentreModal').modal('hide');
                 Swal.fire({
                     icon: 'success',
                     title: 'Succès',
@@ -142,7 +145,7 @@ $(document).ready(function() {
         });
     });
 
-    // Display SweetAlert on successful region update
+    // Display SweetAlert on successful centre update
     @if(session('success'))
         Swal.fire({
             icon: 'success',
@@ -152,8 +155,8 @@ $(document).ready(function() {
     @endif
 });
 
-// Function to delete a region
-function deleteRegion(regionId) {
+// Function to delete a centre
+function deleteCentre(centreId) {
     Swal.fire({
         title: 'Êtes-vous sûr?',
         text: "Vous ne pourrez pas revenir en arrière!",
@@ -165,7 +168,7 @@ function deleteRegion(regionId) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "/regions/" + regionId,
+                url: "/centres/" + centreId,
                 type: 'DELETE',
                 data: {
                     _token: '{{ csrf_token() }}'
@@ -173,10 +176,10 @@ function deleteRegion(regionId) {
                 success: function(response) {
                     Swal.fire(
                         'Supprimé!',
-                        'La région a été supprimée.',
+                        'Le centre a été supprimé.',
                         'success'
                     );
-                    $('#regions-table').DataTable().ajax.reload();
+                    $('#centres-table').DataTable().ajax.reload();
                 },
                 error: function(response) {
                     Swal.fire(
@@ -191,18 +194,19 @@ function deleteRegion(regionId) {
 }
 
 // Function to open edit modal and populate data
-function editRegion(regionId) {
+function editCentre(centreId) {
     $.ajax({
-        url: '/regions/' + regionId + '/edit',
+        url: '/centres/' + centreId + '/edit',
         type: 'GET',
         success: function(response) {
-            $('#regionName').val(response.name);
-            $('#editRegionModal').data('id', regionId).modal('show');
+            $('#centreName').val(response.name);
+            $('#centreRegion').val(response.region_id);
+            $('#editCentreModal').data('id', centreId).modal('show');
         },
         error: function(response) {
             Swal.fire(
                 'Erreur!',
-                'Impossible de récupérer les informations de la région.',
+                'Impossible de récupérer les informations du centre.',
                 'error'
             );
         }

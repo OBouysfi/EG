@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\CategorieAParticipant;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -13,6 +14,7 @@ class Participant extends Model
     protected $fillable = [
         'centre_id', 'status','nom_prenom', 'numero_cin', 'date_naissance', 'ville_naissance', 'adresse', 'ville_centre', 'telephone', 'categorie', 'montant_inscription', 'commercial', 'etat', 'reste'
     ];
+
 
     public function centre()
     {
