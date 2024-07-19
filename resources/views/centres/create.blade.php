@@ -2,7 +2,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+
+<div class="page-wrapper">
+
+    <div class="container-fluid">
+    <div class="col-12">
+<div class="card">
     <h1 class="mb-4">Ajouter un Centre</h1>
     <form action="{{ route('centres.store') }}" method="POST">
         @csrf
@@ -20,5 +25,8 @@
         </div>
         <button type="submit" class="btn btn-primary">Ajouter</button>
     </form>
+</div>
+</div>
+</div>
 </div>
 @endsection
