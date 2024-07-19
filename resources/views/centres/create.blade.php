@@ -1,6 +1,6 @@
 <!-- resources/views/centres/create.blade.php -->
 @extends('layouts.app')
-
+<title>Ajouter Centre</title>
 @section('content')
 
 <div class="page-wrapper">

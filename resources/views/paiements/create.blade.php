@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<title>Ajouter un Paiement</title>
 @section('content')
 <div class="container" style="margin-top: 100px !important;">
     <div class="card">

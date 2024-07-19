@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<title>Ajouter Participant</title>
 @section('content')
 
 <div class="page-wrapper">

@@ -8,9 +8,9 @@
     <div class="container-fluid">
     <div class="col-12">
 <div class="card">
-    <div class="card" style="width: 100%; margin-top:10%;">
+    <div class="card">
         <div class="card-header">
-            <h4 class="text-dark">Ajouter une Région</h4>
+            <h1 class="mb-4">Ajouter une Région</h1>
         </div>
         <div class="card-body">
             @if ($errors->any())

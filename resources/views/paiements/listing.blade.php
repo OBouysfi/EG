@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+<title>Liste des Paiements</title>
 <style>
     .btn-group-sm > .btn, .btn-sm {
         padding: .25rem .5rem;
