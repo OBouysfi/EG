@@ -46,7 +46,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user = Role::where('name', 'user')->first();
 
         $superAdmin->syncPermissions(Permission::all());
-        $admin->syncPermissions(['manage regions', 'manage centres', 'manage participants']);
+        $admin->syncPermissions(['manage centres', 'manage participants','manage diplomas','manage certificates']);
         $user->syncPermissions(['manage participants']);
     }
 }
