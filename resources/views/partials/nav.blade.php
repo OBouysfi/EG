@@ -166,13 +166,16 @@
                 <!-- User profile and search -->
                 <!-- ============================================================== -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('assets/images/users/othman.jpeg') }}" alt="user" class="rounded-circle"
-                            width="50" height="50"></span> <span
-                                class="text-dark">Othman Bouysfi</span> <i data-feather="chevron-down"
-                                class="svg-icon"></i></span>
-                    </a>
+                    @php
+                    $user = Auth::user();
+                @endphp
+                
+                <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('assets/images/users/othman.jpeg') }}" 
+                         alt="" class="rounded-circle" width="50" height="50">
+                    <span class="text-dark">{{ $user->name }}</span>
+                    <i data-feather="chevron-down" class="svg-icon"></i>
+                </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
                         <a class="dropdown-item" href="javascript:void(0)"><i data-feather="user"
                                 class="svg-icon mr-2 ml-1"></i>

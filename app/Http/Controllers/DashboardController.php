@@ -7,13 +7,14 @@ use App\Models\Centre;
 use App\Models\Attestation;
 use App\Models\Paiement;
 use App\Models\Region;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
     public function dashboard()
     {
-
+        $user = User::all();
         $regionsCount = Region::count();
         $centresCount = Centre::count();
         $participantsCount = Participant::count();

@@ -54,6 +54,9 @@
                             onclick="window.location.href='{{ route('participants.export') }}'">
                             <i class="fa fa-download"></i> Télécharger
                         </button>
+                        <button class="btn btn-info" style="background: #006064;" onclick="window.print();">
+                            <i class="fa fa-print"></i> Imprimer
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">

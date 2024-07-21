@@ -52,6 +52,9 @@
                 <button class="btn btn-secondary" style="background: #003F49;" onclick="window.location.href='{{ route('regions.export') }}'">
                     <i class="fa fa-download"></i> Télécharger
                 </button>
+                <button class="btn btn-info" style="background: #006064;" onclick="window.print();">
+                    <i class="fa fa-print"></i> Imprimer
+                </button>
             </div>
         </div>
         <div class="card-body">

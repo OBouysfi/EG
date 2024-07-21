@@ -9,7 +9,12 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Bienvenue Othman!</h3>
+@php
+    $user = Auth::user();
+    $firstName = explode(' ', $user->name)[0];
+@endphp
+
+                   <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Bienvenue {{ $firstName }}!</h3>
                     <div class="d-flex align-items-center">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb m-0 p-0">

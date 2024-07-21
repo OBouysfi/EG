@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
         RolesAndPermissionsSeeder::class,
         RegionsTableSeeder::class,
         SuperAdminSeeder::class,
-        AdminSeeder::class,
         CategoriesTableSeeder::class
     ]);
     }

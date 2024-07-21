@@ -53,6 +53,9 @@
                 <button class="btn btn-secondary" style="background: #003F49;" onclick="window.location.href='{{ route('centres.export') }}'">
                     <i class="fa fa-download"></i> Télécharger
                 </button>
+                <button class="btn btn-info" style="background: #006064;" onclick="printTable()">
+                    <i class="fa fa-print"></i> Imprimer
+                </button>
             </div>
         </div>
         <div class="card-body">
@@ -114,7 +117,12 @@ $(document).ready(function() {
                 "sortAscending": ": activer pour trier la colonne par ordre croissant",
                 "sortDescending": ": activer pour trier la colonne par ordre décroissant"
             }
+        },
+    layout: {
+        topStart: {
+            buttons: ['Imprimer']
         }
+    }
     });
 
     // Handle form submission for editing a centre
