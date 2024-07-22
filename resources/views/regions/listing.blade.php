@@ -52,7 +52,7 @@
                 <button class="btn btn-secondary" style="background: #003F49;" onclick="window.location.href='{{ route('regions.export') }}'">
                     <i class="fa fa-download"></i> Télécharger
                 </button>
-                <button class="btn btn-info" style="background: #006064;" onclick="window.print();">
+                <button id="printButton" class="btn btn-info" style="background: #006064;">
                     <i class="fa fa-print"></i> Imprimer
                 </button>
             </div>
@@ -118,8 +118,7 @@ $(document).ready(function() {
                     '<i class="fa fa-edit mr-1"></i>Modifier</button>' +
                     '<button type="button" class="btn btn-danger btn-sm ml-2" onclick="deleteRegion(' + row.id + ')">' +
                     '<i class="fa fa-trash mr-1"></i>Supprimer</button></div>';
-
-                }}
+            }}
         ],
         language: {
             "emptyTable": "Aucune donnée disponible",
@@ -143,6 +142,31 @@ $(document).ready(function() {
                 "sortDescending": ": activer pour trier la colonne par ordre décroissant"
             }
         }
+    });
+
+    $('#printButton').on('click', function() {
+        var css = `
+            @page { size: auto; margin: 20mm; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
+            th { background-color: #003F54; color: #fff; }
+        `;
+
+        var printWindow = window.open('', '', 'height=800,width=1100');
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<style>' + css + '</style>');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Régions</h3>');
+
+        // Clone the table and remove unwanted elements
+        var tableClone = $('#regions-table').clone();
+        tableClone.find('.dataTables_paginate, .dataTables_filter').remove();
+        printWindow.document.write(tableClone.prop('outerHTML'));
+
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
     });
 
     $('#editRegionForm').on('submit', function(e) {

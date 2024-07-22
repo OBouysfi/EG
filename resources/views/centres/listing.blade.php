@@ -52,10 +52,9 @@
                 </a>
                 <button class="btn btn-secondary" style="background: #003F49;" onclick="window.location.href='{{ route('centres.export') }}'">
                     <i class="fa fa-download"></i> Télécharger
-                </button>
-                <button class="btn btn-info" style="background: #006064;" onclick="printTable()">
-                    <i class="fa fa-print"></i> Imprimer
-                </button>
+                    <button id="printButton" class="btn btn-info" style="background: #006064;">
+                        <i class="fa fa-print"></i> Imprimer
+                    </button>
             </div>
         </div>
         <div class="card-body">
@@ -86,6 +85,7 @@
 @section('js')
 <script>
 $(document).ready(function() {
+    // Initialize DataTable without the default print button
     var table = $('#centres-table').DataTable({
         processing: true,
         serverSide: true,
@@ -96,6 +96,8 @@ $(document).ready(function() {
             { data: 'region.name', name: 'region.name' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false }
         ],
+        dom: 'Bfrtip',  // This configuration should be kept for layout
+        buttons: [],    // No DataTables print button
         language: {
             "emptyTable": "Aucune donnée disponible",
             "info": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
@@ -117,14 +119,46 @@ $(document).ready(function() {
                 "sortAscending": ": activer pour trier la colonne par ordre croissant",
                 "sortDescending": ": activer pour trier la colonne par ordre décroissant"
             }
-        },
-    layout: {
-        topStart: {
-            buttons: ['Imprimer']
         }
-    }
     });
 
+    // Bind existing print button to custom print function
+    $('#printButton').on('click', function() {
+        // Custom print functionality
+        var css = `
+            @page { size: auto; margin: 20mm; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
+            th { background-color: #003F54; color: #fff; }
+            .no-print { display: none; }
+        `;
+
+        var printWindow = window.open('', '', 'height=800,width=1100');
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<style>' + css + '</style>');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Centres</h3>');
+
+        // Clone the table and remove unwanted elements
+        var tableClone = $('#centres-table').clone();
+        tableClone.find('.dataTables_paginate, .dataTables_filter').remove();
+        printWindow.document.write(tableClone.prop('outerHTML'));
+
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+    });
+});
+function printTable() {
+    var printContents = document.getElementById('printableTable').innerHTML;
+    var originalContents = document.body.innerHTML;
+
+    document.body.innerHTML = printContents;
+    window.print();
+    document.body.innerHTML = originalContents;
+} 
+ 
     // Handle form submission for editing a centre
     $('#editCentreForm').on('submit', function(e) {
         e.preventDefault();
@@ -157,7 +191,7 @@ $(document).ready(function() {
                 });
             }
         });
-    });
+    
 
     // Display SweetAlert on successful centre update
     @if(session('success'))
@@ -207,7 +241,6 @@ function deleteCentre(centreId) {
     });
 }
 
-// Function to open edit modal and populate data
 function editCentre(centreId) {
     $.ajax({
         url: '/centres/' + centreId + '/edit',

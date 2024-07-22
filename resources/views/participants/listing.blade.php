@@ -54,7 +54,7 @@
                             onclick="window.location.href='{{ route('participants.export') }}'">
                             <i class="fa fa-download"></i> Télécharger
                         </button>
-                        <button class="btn btn-info" style="background: #006064;" onclick="window.print();">
+                        <button id="printButton" class="btn btn-info" style="background: #006064;">
                             <i class="fa fa-print"></i> Imprimer
                         </button>
                     </div>
@@ -118,20 +118,18 @@ $(document).ready(function() {
             { data: 'centre', name: 'centre' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
                 return '<div class="btn-group" role="group">' +
-                    '<button type="button" class="btn btn-warning btn-sm me-2" onclick="editParticipant(' + row.id + ')">' +
-                    '<i class="fa fa-edit"></i> Modifier</button>' +
-                    '<button type="button" class="btn btn-danger btn-sm me-2" onclick="deleteParticipant(' + row.id + ')">' +
-                    '<i class="fa fa-trash"></i> Supprimer</button>' +
-                    '<button type="button" class="btn btn-success btn-sm me-2" onclick="addPayment(' + row.id + ')">' +
-                    '<i class="fa fa-dollar-sign"></i> Ajouter Paiement</button>' +
-                    '<button type="button" class="btn btn-info btn-sm me-2" onclick="printDiplome(' + row.id + ')">' +
-                    '<i class="fa fa-graduation-cap"></i> Imprimer Diplôme</button>' +
+                    '<button type="button" class="btn btn-warning text-white btn-sm mr-2" onclick="editParticipant(' + row.id + ')">' +
+                    '<i class="fa fa-edit mr-1"></i>Modifier</button>' +
+                    '<button type="button" class="btn btn-danger btn-sm ml-2" onclick="deleteParticipant(' + row.id + ')">' +
+                    '<i class="fa fa-trash mr-1"></i>Supprimer</button>' +
+                    '<button type="button" class="btn btn-success btn-sm mr-2" onclick="addPayment(' + row.id + ')">' +
+                    '<i class="fa fa-dollar-sign mr-1"></i>Ajouter Paiement</button>' +
+                    '<button type="button" class="btn btn-info btn-sm mr-2" onclick="printDiplome(' + row.id + ')">' +
+                    '<i class="fa fa-graduation-cap mr-1"></i>Imprimer Diplôme</button>' +
                     '<button type="button" class="btn btn-secondary btn-sm" onclick="printAttestation(' + row.id + ')">' +
-                    '<i class="fa fa-certificate"></i> Imprimer Attestation</button>' +
+                    '<i class="fa fa-certificate mr-1"></i>Imprimer Attestation</button>' +
                 '</div>';
             }}
-
-
         ],
         language: {
             "emptyTable": "Aucune donnée disponible",
@@ -157,6 +155,30 @@ $(document).ready(function() {
         }
     });
 
+    $('#printButton').on('click', function() {
+        var css = `
+            @page { size: auto; margin: 20mm; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
+            th { background-color: #003F54; color: #fff; }
+        `;
+
+        var printWindow = window.open('', '', 'height=800,width=1100');
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<style>' + css + '</style>');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Participants</h3>');
+
+        // Clone the table and remove unwanted elements
+        var tableClone = $('#participants-table').clone();
+        tableClone.find('.dataTables_paginate, .dataTables_filter').remove();
+        printWindow.document.write(tableClone.prop('outerHTML'));
+
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+    });
     // Form submission for editing a participant
     $('#editParticipantForm').on('submit', function(e) {
         e.preventDefault();

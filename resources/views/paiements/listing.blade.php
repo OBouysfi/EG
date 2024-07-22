@@ -8,6 +8,19 @@
         border-radius: 1px;
         border-radius: 8px !important;
     }
+    @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printableTable, #printableTable * {
+                visibility: visible;
+            }
+            #printableTable {
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
     .btn-primary {
         background: #F99B0C !important;
         border: none !important;
@@ -51,7 +64,7 @@
                 <button class="btn btn-secondary" style="background: #003F49;">
                     <i class="fa fa-download"></i> Télécharger
                 </button>
-                <button class="btn btn-info" style="background: #006064;" onclick="printTable()">
+                <button id="printButton" class="btn btn-info" style="background: #006064;">
                     <i class="fa fa-print"></i> Imprimer
                 </button>
             </div>
@@ -84,17 +97,22 @@
 @section('js')
 <script>
 $(document).ready(function() {
-    var table = $('#paiements-table').DataTable({
+    var table = $('#centres-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('paiements.data') }}",
+        ajax: "{{ route('centres.data') }}",
         columns: [
             { data: 'id', name: 'id' },
-            { data: 'participant', name: 'participant' },
-            { data: 'seance', name: 'seance' },
-            { data: 'montant', name: 'montant' },
-            { data: 'date_paiement', name: 'date_paiement' },
-            { data: 'actions', name: 'actions', orderable: false, searchable: false }
+            { data: 'name', name: 'name' },
+            { data: 'region.name', name: 'region.name' },
+            { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
+                return '<div class="btn-group" role="group">' +
+                    '<button type="button" class="btn btn-warning text-white btn-sm mr-2" onclick="editCentre(' + row.id + ')">' +
+                    '<i class="fa fa-edit mr-1"></i>Modifier</button>' +
+                    '<button type="button" class="btn btn-danger btn-sm ml-2" onclick="deleteCentre(' + row.id + ')">' +
+                    '<i class="fa fa-trash mr-1"></i>Supprimer</button>' +
+                '</div>';
+            }}
         ],
         language: {
             "emptyTable": "Aucune donnée disponible",
@@ -119,6 +137,33 @@ $(document).ready(function() {
             }
         }
     });
+
+    $('#printButton').on('click', function() {
+        var css = `
+            @page { size: auto; margin: 20mm; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
+            th { background-color: #003F54; color: #fff; }
+        `;
+
+        var printWindow = window.open('', '', 'height=800,width=1100');
+        printWindow.document.write('<html><head><title>Print Table</title>');
+        printWindow.document.write('<style>' + css + '</style>');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Centres</h3>');
+
+        // Clone the table and remove unwanted elements
+        var tableClone = $('#centres-table').clone();
+        tableClone.find('.dataTables_paginate, .dataTables_filter').remove();
+        printWindow.document.write(tableClone.prop('outerHTML'));
+
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
+    });
+
+  
 
     $('#editPaiementForm').on('submit', function(e) {
         e.preventDefault();
