@@ -17,6 +17,7 @@ class CreatePaiementsTable extends Migration
             $table->id();
             $table->foreignId('participant_id')->constrained()->onDelete('cascade');
             $table->decimal('montant', 10, 2);
+            $table->string('seance')->after('montant');
             $table->date('date_paiement');
             $table->timestamps();
             $table->softDeletes();

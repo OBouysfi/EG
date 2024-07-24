@@ -1,26 +1,14 @@
 @extends('layouts.app')
-<title>Liste des Paiements</title>
+
+@section('title', 'Liste des Paiements')
+
 <style>
     .btn-group-sm > .btn, .btn-sm {
         padding: .25rem .5rem;
         font-size: .875rem;
         line-height: 1.5;
-        border-radius: 1px;
         border-radius: 8px !important;
     }
-    @media print {
-            body * {
-                visibility: hidden;
-            }
-            #printableTable, #printableTable * {
-                visibility: visible;
-            }
-            #printableTable {
-                position: absolute;
-                left: 0;
-                top: 0;
-            }
-        }
     .btn-primary {
         background: #F99B0C !important;
         border: none !important;
@@ -46,49 +34,60 @@
         border-radius: 20px;
         padding: 5px 10px;
     }
+    @media print {
+        body * {
+            visibility: hidden;
+        }
+        #printableTable, #printableTable * {
+            visibility: visible;
+        }
+        #printableTable {
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+    }
 </style>
 
 @section('content')
 <div class="page-wrapper">
-<div class="container-fluid">
-
-    <div class="row">
-        <div class="col-12">
-    <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h3 class="mb-0 text-dark">Liste des Paiements</h3>
-            <div>
-                <a href="{{ route('paiements.create') }}" class="btn btn-primary" style="background: #004F6D !important;">
-                    <i class="fa fa-plus"></i> Ajouter
-                </a>
-                <button class="btn btn-secondary" style="background: #003F49;">
-                    <i class="fa fa-download"></i> Télécharger
-                </button>
-                <button id="printButton" class="btn btn-info" style="background: #006064;">
-                    <i class="fa fa-print"></i> Imprimer
-                </button>
-            </div>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table id="paiements-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Participant</th>
-                            <th scope="col">Séance</th>
-                            <th scope="col">Montant</th>
-                            <th scope="col">Date de Paiement</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                </table>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0 text-dark">Liste des Paiements</h3>
+                    <div>
+                        <a href="{{ route('paiements.create') }}" class="btn btn-primary" style="background: #004F6D !important;">
+                            <i class="fa fa-plus"></i> Ajouter
+                        </a>
+                        <button class="btn btn-secondary" style="background: #003F49;">
+                            <i class="fa fa-download"></i> Télécharger
+                        </button>
+                        <button id="printButton" class="btn btn-info" style="background: #006064;">
+                            <i class="fa fa-print"></i> Imprimer
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="paiements-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Participant</th>
+                                    <th scope="col">Séance</th>
+                                    <th scope="col">Montant</th>
+                                    <th scope="col">Date de Paiement</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
- </div>
-  </div>
-   </div>
+</div>
 
 @include('paiements.edit')
 
@@ -97,19 +96,21 @@
 @section('js')
 <script>
 $(document).ready(function() {
-    var table = $('#centres-table').DataTable({
+    var table = $('#paiements-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('centres.data') }}",
+        ajax: "{{ route('paiements.data') }}",
         columns: [
             { data: 'id', name: 'id' },
-            { data: 'name', name: 'name' },
-            { data: 'region.name', name: 'region.name' },
+            { data: 'participant', name: 'participant.nom_prenom' },
+            { data: 'seance', name: 'seance' },
+            { data: 'montant', name: 'montant' },
+            { data: 'date_paiement', name: 'date_paiement' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
                 return '<div class="btn-group" role="group">' +
-                    '<button type="button" class="btn btn-warning text-white btn-sm mr-2" onclick="editCentre(' + row.id + ')">' +
+                    '<button type="button" class="btn btn-warning text-white btn-sm mr-2" onclick="editPaiement(' + row.id + ')">' +
                     '<i class="fa fa-edit mr-1"></i>Modifier</button>' +
-                    '<button type="button" class="btn btn-danger btn-sm ml-2" onclick="deleteCentre(' + row.id + ')">' +
+                    '<button type="button" class="btn btn-danger btn-sm ml-2" onclick="deletePaiement(' + row.id + ')">' +
                     '<i class="fa fa-trash mr-1"></i>Supprimer</button>' +
                 '</div>';
             }}
@@ -139,31 +140,36 @@ $(document).ready(function() {
     });
 
     $('#printButton').on('click', function() {
-        var css = `
-            @page { size: auto; margin: 20mm; }
-            table { width: 100%; border-collapse: collapse; }
-            th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
-            th { background-color: #003F54; color: #fff; }
-        `;
+    var css = `
+        @page { size: auto; margin: 20mm; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
+        th { background-color: #003F54; color: #fff; }
+    `;
 
-        var printWindow = window.open('', '', 'height=800,width=1100');
-        printWindow.document.write('<html><head><title>Print Table</title>');
-        printWindow.document.write('<style>' + css + '</style>');
-        printWindow.document.write('</head><body >');
-        printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Centres</h3>');
+    var printWindow = window.open('', '', 'height=800,width=1100');
+    printWindow.document.write('<html><head><title>Print Table</title>');
+    printWindow.document.write('<style>' + css + '</style>');
+    printWindow.document.write('</head><body >');
+    printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Paiements</h3>');
 
-        // Clone the table and remove unwanted elements
-        var tableClone = $('#centres-table').clone();
-        tableClone.find('.dataTables_paginate, .dataTables_filter').remove();
-        printWindow.document.write(tableClone.prop('outerHTML'));
+    // Clone the table and remove unwanted elements
+    var tableClone = $('#paiements-table').clone();
+    tableClone.find('.dataTables_paginate, .dataTables_filter').remove();
 
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.focus();
-        printWindow.print();
+    // Remove the actions column (assuming it's the last column)
+    tableClone.find('thead th:last-child').remove();
+    tableClone.find('tbody tr').each(function() {
+        $(this).find('td:last-child').remove();
     });
 
-  
+    printWindow.document.write(tableClone.prop('outerHTML'));
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+});
+
 
     $('#editPaiementForm').on('submit', function(e) {
         e.preventDefault();
@@ -253,40 +259,29 @@ function editPaiement(paiementId) {
 
             var participantSelect = $('#editPaiementForm').find('select[name="participant_id"]');
             participantSelect.empty();
-            participants.forEach(function(participant) {
+            $.each(participants, function(index, participant) {
                 participantSelect.append(new Option(participant.nom_prenom, participant.id));
             });
             participantSelect.val(paiement.participant_id);
 
             var seanceSelect = $('#editPaiementForm').find('select[name="seance"]');
             seanceSelect.empty();
-            seances.forEach(function(seance) {
+            $.each(seances, function(index, seance) {
                 seanceSelect.append(new Option(seance, seance));
             });
             seanceSelect.val(paiement.seance);
 
-            $('#editPaiementModal').data('id', paiementId).modal('show');
+            $('#editPaiementModal').modal('show');
+            $('#editPaiementModal').data('id', paiement.id);
         },
         error: function(response) {
-            Swal.fire(
-                'Erreur!',
-                'Impossible de récupérer les informations du paiement.',
-                'error'
-            );
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: 'Une erreur est survenue lors de la récupération des données du paiement.',
+            });
         }
     });
-}
-function printTable() {
-    var printContents = document.getElementById("paiements-table").outerHTML;
-    var originalContents = document.body.innerHTML;
-
-    var styleElement = '<style>table { border-collapse: collapse; width: 100%; } th, td { border: 1px solid black; padding: 8px; text-align: left; }</style>';
-
-    document.body.innerHTML = styleElement + printContents;
-
-    window.print();
-
-    document.body.innerHTML = originalContents;
 }
 </script>
 @endsection

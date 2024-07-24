@@ -156,29 +156,35 @@ $(document).ready(function() {
     });
 
     $('#printButton').on('click', function() {
-        var css = `
-            @page { size: auto; margin: 20mm; }
-            table { width: 100%; border-collapse: collapse; }
-            th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
-            th { background-color: #003F54; color: #fff; }
-        `;
+    var css = `
+        @page { size: auto; margin: 20mm; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
+        th { background-color: #003F54; color: #fff; }
+    `;
 
-        var printWindow = window.open('', '', 'height=800,width=1100');
-        printWindow.document.write('<html><head><title>Print Table</title>');
-        printWindow.document.write('<style>' + css + '</style>');
-        printWindow.document.write('</head><body >');
-        printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Participants</h3>');
+    var printWindow = window.open('', '', 'height=800,width=1100');
+    printWindow.document.write('<html><head><title>Print Table</title>');
+    printWindow.document.write('<style>' + css + '</style>');
+    printWindow.document.write('</head><body >');
+    printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Participants</h3>');
 
-        // Clone the table and remove unwanted elements
-        var tableClone = $('#participants-table').clone();
-        tableClone.find('.dataTables_paginate, .dataTables_filter').remove();
-        printWindow.document.write(tableClone.prop('outerHTML'));
+    // Clone the table and remove unwanted columns
+    var tableClone = $('#participants-table').clone();
 
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.focus();
-        printWindow.print();
+    // Remove unwanted columns (actions, ville de naissance, date de naissance, adresse, telephone, categorie)
+    tableClone.find('thead th:nth-child(4), thead th:nth-child(5), thead th:nth-child(6), thead th:nth-child(8), thead th:nth-child(9), thead th:nth-child(15)').remove();
+    tableClone.find('tbody tr').each(function() {
+        $(this).find('td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(8), td:nth-child(9), td:nth-child(15)').remove();
     });
+
+    printWindow.document.write(tableClone.prop('outerHTML'));
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+});
+
     // Form submission for editing a participant
     $('#editParticipantForm').on('submit', function(e) {
         e.preventDefault();

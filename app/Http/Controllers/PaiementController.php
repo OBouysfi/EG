@@ -13,7 +13,8 @@ class PaiementController extends Controller
 {
     public function index()
     {
-        return view('paiements.listing');
+        $paiements = Paiement::with('participant')->get();
+        return view('paiements.listing', compact('paiements'));
     }
 
     public function data()

@@ -67,9 +67,10 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Paiement routes
+    Route::get('paiements/data', [PaiementController::class, 'data'])->name('paiements.data');
+
     Route::middleware(['permission:manage payments'])->prefix('paiements')->name('paiements.')->group(function () {
         Route::get('listes', [PaiementController::class, 'index'])->name('index');
-        Route::get('data', [PaiementController::class, 'data'])->name('data');
         Route::get('create', [PaiementController::class, 'create'])->name('create');
         Route::post('/', [PaiementController::class, 'store'])->name('store');
         Route::get('{paiement}/edit', [PaiementController::class, 'edit'])->name('edit');

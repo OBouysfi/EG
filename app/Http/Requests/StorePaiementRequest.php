@@ -24,6 +24,7 @@ class StorePaiementRequest extends FormRequest
     public function rules()
     {
         return [
+            'participant_id' => 'required|exists:participants,id',
             'montant' => 'required|numeric',
             'seance' => 'required|string|in:S1,S2,S3,S4,Centre',
             'date_paiement' => 'required|date',

@@ -73,6 +73,7 @@ class ParticipantController extends Controller
         public function storePaiement(Request $request, Participant $participant)
         {
             $validated = $request->validate([
+                'participant_id' => 'required|exists:participants,id',
                 'seance' => 'required|string',
                 'montant' => 'required|numeric',
                 'date_paiement' => 'required|date',

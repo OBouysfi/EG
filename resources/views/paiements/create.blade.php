@@ -1,7 +1,10 @@
 @extends('layouts.app')
 <title>Ajouter un Paiement</title>
 @section('content')
-<div class="container" style="margin-top: 100px !important;">
+<div class="page-wrapper">
+
+    <div class="container-fluid">
+    <div class="col-12">
     <div class="card">
         <div class="card-header">
             <h3 class="mb-0 text-dark">Ajouter un Paiement</h3>
@@ -39,5 +42,8 @@
             </form>
         </div>
     </div>
+</div>
+</div>
+</div>
 </div>
 @endsection
