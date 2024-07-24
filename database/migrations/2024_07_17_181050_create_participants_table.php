@@ -29,6 +29,20 @@ class CreateParticipantsTable extends Migration
             $table->string('commercial')->nullable();
             $table->string('etat')->default('Non')->nullable();
             $table->decimal('reste', 10, 2)->default(0)->nullable();
+
+            // Champs supplémentaires
+            $table->string('numero_recu')->nullable();
+            $table->string('s1')->nullable();
+            $table->date('date_s1')->nullable();
+            $table->string('s2')->nullable();
+            $table->date('date_s2')->nullable();
+            $table->string('s3')->nullable();
+            $table->date('date_s3')->nullable();
+            $table->string('s4')->nullable();
+            $table->date('date_s4')->nullable();
+            $table->string('centre')->nullable();
+            $table->date('date_centre')->nullable();
+
             $table->timestamps();
             $table->softDeletes();
         });

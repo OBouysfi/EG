@@ -74,10 +74,19 @@
                                     <th scope="col">Téléphone</th>
                                     <th scope="col">Catégorie</th>
                                     <th scope="col">Montant Inscription</th>
+                                    <th scope="col">S1</th>
+                                    <th scope="col">Date S1</th>
+                                    <th scope="col">S2</th>
+                                    <th scope="col">Date S2</th>
+                                    <th scope="col">S3</th>
+                                    <th scope="col">Date S3</th>
+                                    <th scope="col">S4</th>
+                                    <th scope="col">Date S4</th>
+                                    <th scope="col">Centre</th>
+                                    <th scope="col">Date Centre</th>
                                     <th scope="col">Commercial</th>
                                     <th scope="col">État</th>
                                     <th scope="col">Reste</th>
-                                    <th scope="col">Centre</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -112,10 +121,19 @@ $(document).ready(function() {
             { data: 'telephone', name: 'telephone' },
             { data: 'categorie', name: 'categorie' },
             { data: 'montant_inscription', name: 'montant_inscription' },
+            { data: 's1', name: 's1' },
+            { data: 'date_s1', name: 'date_s1' },
+            { data: 's2', name: 's2' },
+            { data: 'date_s1', name: 'date_s2' },
+            { data: 's3', name: 's3' },
+            { data: 'date_s3', name: 'date_s3' },
+            { data: 's4', name: 'centre' },
+            { data: 'date_s4', name: 'date_s4' },
+            { data: 'centre', name: 'centre' },
+            { data: 'date_centre', name: 'date_centre' },
             { data: 'commercial', name: 'commercial' },
             { data: 'etat', name: 'etat' },
             { data: 'reste', name: 'reste' },
-            { data: 'centre', name: 'centre' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
                 return '<div class="btn-group" role="group">' +
                     '<button type="button" class="btn btn-warning text-white btn-sm mr-2" onclick="editParticipant(' + row.id + ')">' +
