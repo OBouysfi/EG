@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateParticipantRequest;
 use App\Models\Centre;
 use App\Models\Paiement;
 use App\Models\Participant;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -15,24 +16,39 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ParticipantController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('participants.listing');
+        $centres = Centre::all();
+        $regions = Region::all();
+    
+        return view('participants.listing', compact('centres', 'regions'));
+    }
+    
+
+    public function data(Request $request)
+{
+    $query = Participant::with('centre');
+
+    if ($request->has('centre_id') && $request->centre_id != '') {
+        $query->where('centre_id', $request->centre_id);
     }
 
-    public function data()
-    {
-        $participants = Participant::with('centre')->select('participants.*');
-    
-        return DataTables::of($participants)
-            ->addColumn('centre', function ($participant) {
-                return $participant->centre ? $participant->centre->name : 'N/A';
-            })
-            ->addColumn('actions', function ($participant) {
-                return view('participants.actions', compact('participant'))->render();
-            })
-            ->make(true);
+    if ($request->has('region_id') && $request->region_id != '') {
+        $query->whereHas('centre', function ($q) use ($request) {
+            $q->where('region_id', $request->region_id);
+        });
     }
+
+    return DataTables::of($query)
+        ->addColumn('centre', function ($participant) {
+            return $participant->centre ? $participant->centre->name : 'N/A';
+        })
+        ->addColumn('actions', function ($participant) {
+            return view('participants.actions', compact('participant'))->render();
+        })
+        ->make(true);
+}
+
 
     public function create()
     {

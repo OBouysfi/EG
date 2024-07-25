@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Liste des Participants')
-    
+
 <style>
     .btn-group-sm > .btn, .btn-sm {
         padding: .25rem .5rem;
@@ -40,23 +40,38 @@
 @section('content')
 <div class="page-wrapper">
     <div class="container-fluid">
-
         <div class="row">
             <div class="card">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h3 class="mb-0 text-dark">Liste des Participants</h3>
-                    <div>
-                        <a href="{{ route('participants.create') }}" class="btn btn-primary"
-                            style="background: #004F6D !important;">
-                            <i class="fa fa-plus"></i> Ajouter
-                        </a>
-                        <button class="btn btn-secondary" style="background: #003F49;"
-                            onclick="window.location.href='{{ route('participants.export') }}'">
-                            <i class="fa fa-download"></i> Télécharger
-                        </button>
-                        <button id="printButton" class="btn btn-info" style="background: #006064;">
-                            <i class="fa fa-print"></i> Imprimer
-                        </button>
+                    <div class="d-flex align-items-center">
+                        <div class="form-group mr-2 mt-3">
+                            <select id="centreFilter" class="form-control">
+                                <option value="">Tous les centres</option>
+                                @foreach($centres as $centre)
+                                    <option value="{{ $centre->id }}">{{ $centre->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mr-2 mt-3">
+                            <select id="regionFilter" class="form-control">
+                                <option value="">Toutes les régions</option>
+                                @foreach($regions as $region)
+                                    <option value="{{ $region->id }}">{{ $region->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <a href="{{ route('participants.create') }}" class="btn btn-primary" style="background: #004F6D !important;">
+                                <i class="fa fa-plus"></i> Ajouter
+                            </a>
+                            <button class="btn btn-secondary" style="background: #003F49;" onclick="window.location.href='{{ route('participants.export') }}'">
+                                <i class="fa fa-download"></i> Télécharger
+                            </button>
+                            <button id="printButton" class="btn btn-info" style="background: #006064;">
+                                <i class="fa fa-print"></i> Imprimer
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body">
@@ -106,20 +121,16 @@
 @section('js')
 <script>
 $(document).ready(function() {
-    var centreId = "{{ request('centreId') }}";
-    var regionId = "{{ request('regionId') }}";
-    var ajaxUrl = "{{ route('participants.data') }}";
-    if (centreId) {
-        ajaxUrl += '?centreId=' + centreId;
-    }
-    if (regionId) {
-        ajaxUrl += '?regionId=' + regionId;
-    }
-
     var table = $('#participants-table').DataTable({
         processing: true,
         serverSide: true,
-        ajax: ajaxUrl,
+        ajax: {
+            url: "{{ route('participants.data') }}",
+            data: function (d) {
+                d.centre_id = $('#centreFilter').val();
+                d.region_id = $('#regionFilter').val();
+            }
+        },
         columns: [
             { data: 'id', name: 'id' },
             { data: 'nom_prenom', name: 'nom_prenom' },
@@ -134,7 +145,7 @@ $(document).ready(function() {
             { data: 's1', name: 's1' },
             { data: 'date_s1', name: 'date_s1' },
             { data: 's2', name: 's2' },
-            { data: 'date_s1', name: 'date_s2' },
+            { data: 'date_s2', name: 'date_s2' },
             { data: 's3', name: 's3' },
             { data: 'date_s3', name: 'date_s3' },
             { data: 's4', name: 'centre' },
@@ -183,6 +194,10 @@ $(document).ready(function() {
         }
     });
 
+    $('#centreFilter, #regionFilter').change(function() {
+        table.ajax.reload();
+    });
+
     $('#printButton').on('click', function() {
         var css = `
             @page { size: auto; margin: 20mm; }
@@ -197,13 +212,7 @@ $(document).ready(function() {
         printWindow.document.write('</head><body >');
         printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Participants</h3>');
 
-        // Clone the table and remove unwanted elements
         var tableClone = $('#participants-table').clone();
-        tableClone.find('.dataTables_paginate, .dataTables_filter').remove();
-        printWindow.document.write(tableClone.prop('outerHTML'));
-
-        var tableClone = $('#participants-table').clone();
-
         tableClone.find('thead th:nth-child(4), thead th:nth-child(5), thead th:nth-child(6), thead th:nth-child(8), thead th:nth-child(9), thead th:nth-child(15)').remove();
         tableClone.find('tbody tr').each(function() {
             $(this).find('td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(8), td:nth-child(9), td:nth-child(15)').remove();
