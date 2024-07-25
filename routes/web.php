@@ -68,15 +68,16 @@ Route::middleware(['auth'])->group(function () {
 
     // Paiement routes
     Route::get('paiements/data', [PaiementController::class, 'data'])->name('paiements.data');
-
+    Route::put('/paiements/{paiement}', [PaiementController::class, 'update'])->name('paiements.update');
     Route::middleware(['permission:manage payments'])->prefix('paiements')->name('paiements.')->group(function () {
         Route::get('listes', [PaiementController::class, 'index'])->name('index');
         Route::get('create', [PaiementController::class, 'create'])->name('create');
         Route::post('/', [PaiementController::class, 'store'])->name('store');
-        Route::get('{paiement}/edit', [PaiementController::class, 'edit'])->name('edit');
+        Route::get('{id}/edit', [PaiementController::class, 'edit'])->name('edit');
         Route::put('{paiement}', [PaiementController::class, 'update'])->name('update');
         Route::delete('{paiement}', [PaiementController::class, 'destroy'])->name('destroy');
     });
+    
 
     // Diplome routes
     Route::middleware(['permission:manage diplomas'])->prefix('diplomes')->name('diplomes.')->group(function () {

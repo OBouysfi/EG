@@ -8,24 +8,27 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="editPaiementForm">
+                <form id="editPaiementForm" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="form-group">
                         <label for="participant_id">Participant</label>
                         <select name="participant_id" id="participant_id" class="form-control" required>
-                            <!-- Participants seront ajoutés par JavaScript -->
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="seance">Séance</label>
                         <select name="seance" id="seance" class="form-control" required>
-                            <!-- Séances seront ajoutées par JavaScript -->
+                            <option value="S1">S1</option>
+                            <option value="S2">S2</option>
+                            <option value="S3">S3</option>
+                            <option value="S4">S4</option>
+                            <option value="Centre">Centre</option>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="montant">Montant</label>
-                        <input type="number" name="montant" id="montant" class="form-control" step="0.01" required>
+                        <input type="number" step="0.01" name="montant" id="montant" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="date_paiement">Date de Paiement</label>

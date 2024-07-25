@@ -35,7 +35,6 @@ class PaiementController extends Controller
             ->rawColumns(['actions'])
             ->make(true);
     }
-
     public function create()
     {
         $participants = Participant::all();
@@ -54,14 +53,22 @@ class PaiementController extends Controller
     {
         $participants = Participant::all();
         $seances = ['S1', 'S2', 'S3', 'S4', 'Centre'];
-        return view('paiements.edit', compact('paiement', 'participants', 'seances'));
+        return response()->json([
+            'paiement' => $paiement,
+            'participants' => $participants,
+            'seances' => $seances
+        ]);
     }
-
+    
     public function update(UpdatePaiementRequest $request, Paiement $paiement)
     {
         $paiement->update($request->validated());
-
-        return redirect()->route('paiements.index')->with('success', 'Paiement mis à jour avec succès');
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Paiement mis à jour avec succès',
+            'paiement' => $paiement
+        ]);
     }
 
     public function destroy(Paiement $paiement)

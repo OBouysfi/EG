@@ -139,7 +139,7 @@ $(document).ready(function() {
         }
     });
 
-    $('#printButton').on('click', function() {
+   $('#printButton').on('click', function() {
     var css = `
         @page { size: auto; margin: 20mm; }
         table { width: 100%; border-collapse: collapse; }
@@ -171,34 +171,34 @@ $(document).ready(function() {
 });
 
 
-    $('#editPaiementForm').on('submit', function(e) {
-        e.preventDefault();
-        var id = $('#editPaiementModal').data('id');
-        var formData = $(this).serialize();
+$('#editPaiementForm').on('submit', function(e) {
+    e.preventDefault();
+    var form = $(this);
+    var url = form.attr('action');
 
-        $.ajax({
-            url: '/paiements/' + id,
-            type: 'PUT',
-            data: formData,
-            success: function(response) {
-                $('#editPaiementModal').modal('hide');
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Succès',
-                    text: response.message,
-                });
-                table.ajax.reload();
-            },
-            error: function(response) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur',
-                    text: response.responseJSON.message,
-                });
-            }
-        });
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: form.serialize(),
+        success: function(response)
+        {
+            $('#editPaiementModal').modal('hide');
+            Swal.fire({
+                icon: 'success',
+                title: 'Succès',
+                text: response.message,
+            });
+            $('#paiements-table').DataTable().ajax.reload();
+        },
+        error: function(xhr) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erreur',
+                text: 'Une erreur est survenue lors de la mise à jour du paiement.',
+            });
+        }
     });
-
+});
     @if(session('success'))
         Swal.fire({
             icon: 'success',
@@ -252,27 +252,27 @@ function editPaiement(paiementId) {
         success: function(response) {
             var paiement = response.paiement;
             var participants = response.participants;
-            var seances = ['S1', 'S2', 'S3', 'S4', 'Centre'];
+            var seances = response.seances;
 
-            $('#editPaiementForm').find('input[name="montant"]').val(paiement.montant);
-            $('#editPaiementForm').find('input[name="date_paiement"]').val(paiement.date_paiement);
-
-            var participantSelect = $('#editPaiementForm').find('select[name="participant_id"]');
-            participantSelect.empty();
+            // Populate the form fields
+            $('#editPaiementForm #participant_id').empty();
             $.each(participants, function(index, participant) {
-                participantSelect.append(new Option(participant.nom_prenom, participant.id));
+                $('#editPaiementForm #participant_id').append($('<option>', {
+                    value: participant.id,
+                    text: participant.nom_prenom
+                }));
             });
-            participantSelect.val(paiement.participant_id);
 
-            var seanceSelect = $('#editPaiementForm').find('select[name="seance"]');
-            seanceSelect.empty();
-            $.each(seances, function(index, seance) {
-                seanceSelect.append(new Option(seance, seance));
-            });
-            seanceSelect.val(paiement.seance);
+            $('#editPaiementForm #participant_id').val(paiement.participant_id);
+            $('#editPaiementForm #seance').val(paiement.seance);
+            $('#editPaiementForm #montant').val(paiement.montant);
+            $('#editPaiementForm #date_paiement').val(paiement.date_paiement);
 
+            // Set the form action
+            $('#editPaiementForm').attr('action', '/paiements/' + paiementId);
+
+            // Show the modal
             $('#editPaiementModal').modal('show');
-            $('#editPaiementModal').data('id', paiement.id);
         },
         error: function(response) {
             Swal.fire({
