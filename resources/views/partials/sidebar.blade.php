@@ -93,7 +93,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="{{ route('register') }}" aria-expanded="false">
+                    <a class="sidebar-link sidebar-link" href="{{ route('role_permissions.index') }}" aria-expanded="false">
                         <i data-feather="lock" class="feather-icon"></i>
                         <span class="hide-menu">Ajouter un administrateur</span>
                     </a>
