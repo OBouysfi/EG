@@ -64,6 +64,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('{participant}', [ParticipantController::class, 'destroy'])->name('destroy');
         Route::post('{participant}/paiements', [ParticipantController::class, 'storePaiement'])->name('storePaiement');
         Route::get('export', [ParticipantController::class, 'export'])->name('export');
+        Route::get('centre/{centreId}', [ParticipantController::class, 'filterByCentre'])->name('byCentre');
+        Route::get('region/{regionId}', [ParticipantController::class, 'filterByRegion'])->name('byRegion');
     });
 
     // Paiement routes
