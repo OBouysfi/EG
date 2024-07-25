@@ -91,11 +91,16 @@ $(document).ready(function() {
         serverSide: true,
         ajax: "{{ route('centres.data') }}",
         columns: [
-            { data: 'id', name: 'id' },
-            { data: 'name', name: 'name' },
-            { data: 'region.name', name: 'region.name' },
-            { data: 'actions', name: 'actions', orderable: false, searchable: false }
-        ],
+    { data: 'id', name: 'id' },
+    { data: 'name', name: 'name', render: function(data, type, row) {
+        return '<a href="{{ url('participants/centre') }}/' + row.id + '">' + data + '</a>';
+    }},
+    { data: 'region.name', name: 'region.name', render: function(data, type, row) {
+        return '<a href="{{ url('participants/region') }}/' + row.region_id + '">' + data + '</a>';
+    }},
+    { data: 'actions', name: 'actions', orderable: false, searchable: false }
+]
+,
         dom: 'Bfrtip',  // This configuration should be kept for layout
         buttons: [],    // No DataTables print button
         language: {

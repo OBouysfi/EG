@@ -20,10 +20,20 @@ class ParticipantController extends Controller
         return view('participants.listing');
     }
 
-    public function data()
+    public function data(Request $request)
     {
         $participants = Participant::with('centre')->select('participants.*');
-    
+
+        if ($request->has('centreId')) {
+            $participants->where('centre_id', $request->input('centreId'));
+        }
+
+        if ($request->has('regionId')) {
+            $participants->whereHas('centre', function ($query) use ($request) {
+                $query->where('region_id', $request->input('regionId'));
+            });
+        }
+
         return DataTables::of($participants)
             ->addColumn('centre', function ($participant) {
                 return $participant->centre ? $participant->centre->name : 'N/A';
@@ -33,6 +43,18 @@ class ParticipantController extends Controller
             })
             ->make(true);
     }
+
+    public function filterByCentre($centreId)
+    {
+        return view('participants.listing', ['centreId' => $centreId]);
+    }
+
+    public function filterByRegion($regionId)
+    {
+        return view('participants.listing', ['regionId' => $regionId]);
+    }
+
+    
 
     public function create()
     {
