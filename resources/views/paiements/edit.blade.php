@@ -18,7 +18,7 @@
                     </div>
                     <div class="form-group">
                         <label for="seance">Séance</label>
-                        <select name="seance" id="seance" class="form-control" required>
+                        <select name="seance" id="seance" class="form-control">
                             <option value="S1">S1</option>
                             <option value="S2">S2</option>
                             <option value="S3">S3</option>
@@ -28,11 +28,11 @@
                     </div>
                     <div class="form-group">
                         <label for="montant">Montant</label>
-                        <input type="number" step="0.01" name="montant" id="montant" class="form-control" required>
+                        <input type="number" step="0.01" name="montant" id="montant" class="form-control">
                     </div>
                     <div class="form-group">
                         <label for="date_paiement">Date de Paiement</label>
-                        <input type="date" name="date_paiement" id="date_paiement" class="form-control" required>
+                        <input type="date" name="date_paiement" id="date_paiement" class="form-control">
                     </div>
                     <button type="submit" class="btn btn-primary">Modifier</button>
                 </form>
