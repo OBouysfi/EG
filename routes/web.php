@@ -10,6 +10,32 @@ use App\Http\Controllers\PaiementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttestationController;
 use App\Http\Controllers\DiplomeController;
+use App\Http\Controllers\RolePermissionController;
+
+Route::middleware(['auth', 'role:super-admin'])->group(function () {
+    Route::get('/role-permissions', [RolePermissionController::class, 'index'])->name('role_permissions.index');
+    Route::post('/role-permissions/assign-role/{user}', [RolePermissionController::class, 'assignRole'])->name('role_permissions.assign_role');
+    Route::post('/role-permissions/remove-role/{user}', [RolePermissionController::class, 'removeRole'])->name('role_permissions.remove_role');
+    Route::post('/role-permissions/give-permission/{user}', [RolePermissionController::class, 'givePermission'])->name('role_permissions.give_permission');
+    Route::post('/role-permissions/revoke-permission/{user}', [RolePermissionController::class, 'revokePermission'])->name('role_permissions.revoke_permission');
+    Route::post('/users', [RolePermissionController::class, 'store'])->name('users.store');
+});
+
+Route::middleware(['auth', 'permission:add regions'])->group(function () {
+    Route::get('regions/create', [RegionController::class, 'create'])->name('regions.create');
+    Route::post('regions', [RegionController::class, 'store'])->name('regions.store');
+    Route::delete('regions/{region}', [RegionController::class, 'destroy'])->name('regions.destroy');
+});
+
+Route::middleware(['auth', 'permission:add centres'])->group(function () {
+    Route::get('centres/create', [CentreController::class, 'create'])->name('centres.create');
+    Route::post('centres', [CentreController::class, 'store'])->name('centres.store');
+});
+
+Route::middleware(['auth', 'permission:delete centres'])->group(function () {
+    Route::delete('centres/{centre}', [CentreController::class, 'destroy'])->name('centres.destroy');
+});
+
 
 Route::get('/dashboard', [DashboardController::class, 'dashboard'])
     ->middleware(['auth'])
