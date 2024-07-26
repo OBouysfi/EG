@@ -7,14 +7,14 @@
             <!-- ============================================================== -->
             <!-- Logo -->
             <!-- ============================================================== -->
-            <div class="navbar-brand">
+            <div class="navbar-brand"> 
                 <!-- Logo icon -->
-                <a href="index.html">
+                <a href="{{ route('dashboard') }}">
                     <b class="logo-icon mx-3">
                         <!-- Dark Logo icon -->
-                        <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo mx-5" />
+                        <img src="{{ asset('assets/images/logo-icon.png') }}" alt="dashboard" class="dark-logo mx-5" />
                         <!-- Light Logo icon -->
-                        <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="light-logo mx-5" />
+                        <img src="{{ asset('assets/images/logo-icon.png') }}" alt="dashboard" class="light-logo mx-5" />
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text -->
