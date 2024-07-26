@@ -9,12 +9,12 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-7 align-self-center">
-@php
-    $user = Auth::user();
-    $firstName = explode(' ', $user->name)[0];
-@endphp
+                    @php
+                        $user = Auth::user();
+                        $firstName = explode(' ', $user->name)[0];
+                    @endphp
 
-                   <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">Bienvenue {{ $firstName }}!</h3>
+                    <h3 class="page-title text-truncate text-dark font-weight-medium mb-1">{{ __('attributes.welcome') }} {{ $firstName }}!</h3>
                     <div class="d-flex align-items-center">
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb m-0 p-0">
@@ -53,7 +53,7 @@
                                     <h2 class="text-dark mb-1 font-weight-medium">{{ $regionsCount }}</h2>
                                     <span class="badge bg-primary font-12 text-white font-weight-medium badge-pill ml-2 d-lg-block d-md-none">Regions</span>
                                 </div>
-                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">Nombre de Régions</h6>
+                                <h6 class="text-muted font-weight-normal mb-0 w-100 text-truncate">{{ __('attributes.number_of_regions') }}</h6>
                             </div>
                             <div class="ml-auto mt-md-3 mt-lg-0">
                                 <span class="opacity-7 text-muted"><i data-feather="map"></i></span>
