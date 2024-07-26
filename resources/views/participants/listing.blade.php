@@ -201,7 +201,7 @@ $(document).ready(function() {
     $('#printButton').on('click', function() {
         var css = `
         @page { size: auto; margin: 20mm; }
-        body { zoom: 50%; -webkit-transform: scale(1); transform: scale(1); -webkit-transform-origin: 0 0; transform-origin: 0 0; }
+        body { zoom: 40%; -webkit-transform: scale(1); transform: scale(1); -webkit-transform-origin: 0 0; transform-origin: 0 0; }
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
         th { background-color: #003F54; color: #fff; }
