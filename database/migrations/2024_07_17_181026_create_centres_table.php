@@ -16,7 +16,7 @@ class CreateCentresTable extends Migration
         Schema::create('centres', function (Blueprint $table) {
             $table->id();
             $table->foreignId('region_id')->constrained()->onDelete('cascade');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -4,8 +4,9 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Contracts\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 class SuperAdminSeeder extends Seeder
 {
     /**
@@ -13,14 +14,13 @@ class SuperAdminSeeder extends Seeder
      *
      * @return void
      */
-    
     public function run()
     {
-
+        // Créer un super admin
         $superAdmin = User::create([
             'name' => 'Othman Bouysfi',
             'email' => 'obouysfi@gmail.com',
-            'password' => bcrypt('OBouysfi@'), 
+            'password' => bcrypt('OBouysfi@'),
         ]);
 
         // Créer les permissions
@@ -60,5 +60,13 @@ class SuperAdminSeeder extends Seeder
             'print diploma',
             'print certificate',
         ]);
+
+        // Créer le rôle super admin et lui assigner toutes les permissions
+        $superAdminRole = Role::create(['name' => 'super admin']);
+        $superAdminRole->givePermissionTo(Permission::all());
+
+        // Assigner le rôle super admin à l'utilisateur créé
+        $superAdmin->assignRole($superAdminRole);
     }
 }
+

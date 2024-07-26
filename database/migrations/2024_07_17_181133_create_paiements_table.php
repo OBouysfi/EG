@@ -16,9 +16,9 @@ class CreatePaiementsTable extends Migration
         Schema::create('paiements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('participant_id')->constrained()->onDelete('cascade');
-            $table->decimal('montant', 10, 2);
-            $table->string('seance')->after('montant');
-            $table->date('date_paiement');
+            $table->decimal('montant', 10, 2)->nullable();
+            $table->string('seance')->nullable();
+            $table->date('date_paiement')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

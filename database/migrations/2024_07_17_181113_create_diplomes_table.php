@@ -16,7 +16,7 @@ class CreateDiplomesTable extends Migration
         Schema::create('diplomes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('participant_id')->constrained()->onDelete('cascade');
-            $table->date('date_delivrance');
+            $table->date('date_delivrance')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
