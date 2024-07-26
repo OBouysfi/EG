@@ -14,7 +14,7 @@
                         <!-- Dark Logo icon -->
                         <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="dark-logo mx-5" />
                         <!-- Light Logo icon -->
-                        <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="light-logo mx-5"" />
+                        <img src="{{ asset('assets/images/logo-icon.png') }}" alt="homepage" class="light-logo mx-5" />
                     </b>
                     <!--End Logo icon -->
                     <!-- Logo text -->
@@ -171,7 +171,7 @@
                 @endphp
                 
                 <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('assets/images/users/othman.jpeg') }}" 
+                    <img src="{{ $user->profile_image ? asset('storage/' . $user->profile_image) : asset('assets/images/users/img.png') }}" 
                          alt="" class="rounded-circle" width="50" height="50">
                     <span class="text-dark">{{ $user->name }}</span>
                     <i data-feather="chevron-down" class="svg-icon"></i>

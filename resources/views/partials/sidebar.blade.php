@@ -98,13 +98,6 @@
                         <span class="hide-menu">Ajouter un administrateur</span>
                     </a>
                 </li>
-                <li class="list-divider"></li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="{{ route('login') }}" aria-expanded="false">
-                        <i data-feather="lock" class="feather-icon"></i>
-                        <span class="hide-menu">Login</span>
-                    </a>
-                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation-->
