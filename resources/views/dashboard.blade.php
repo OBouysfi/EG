@@ -259,7 +259,7 @@
                                             </div>
                                             <div class="ml-3 mt-2">
                                                 <h5 class="text-dark font-weight-medium mb-2">{{ $payment->participant->name }}</h5>
-                                                <p class="font-14 mb-2 text-muted">{{ $payment->amount }} MAD payé le {{ $payment->date ? $payment->date->format('d/m/Y') : 'N/A' }}</p>
+                                                <p class="font-14 mb-2 text-muted">{{ $payment->amount }} MAD payé le {{ $payment->date ? $payment->date->format('d/m/Y') : '-' }}</p>
                                                 <span class="font-weight-light font-14 text-muted">{{ $payment->date ? $payment->date->diffForHumans() : 'Date inconnue' }}</span>
                                             </div>
                                         </div>

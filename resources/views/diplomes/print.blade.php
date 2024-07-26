@@ -9,14 +9,47 @@
             size: A4 landscape;
             margin: 0;
         }
+        @media print {
+            body, html {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                width: 100%;
+            }
+            .background {
+                background: url('{{ asset('assets/img/diplome.jpg') }}') no-repeat center center;
+                background-size: cover;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                z-index: -1;
+            }
+        }
         body {
             font-family: Arial, sans-serif;
-            background: url('{{ asset('assets/img/diplome.jpg') }}') no-repeat center center;
-            background-size: 100% 100%;
             margin: 0;
             height: 100vh;
             width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
             position: relative;
+            overflow: hidden;
+        }
+        .background {
+            background: url('{{ asset('assets/img/diplome.jpg') }}') no-repeat center center;
+            background-size: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
         }
         .field {
             position: absolute;
@@ -57,6 +90,7 @@
     </style>
 </head>
 <body>
+    <div class="background"></div>
     <div id="nom" class="field">{{ $participant->nom_prenom }}</div>
     <div id="cin" class="field">{{ $participant->numero_cin }}</div>
     <div id="date_naissance" class="field">{{ $participant->date_naissance }}</div>

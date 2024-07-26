@@ -41,7 +41,7 @@ class ParticipantController extends Controller
 
     return DataTables::of($query)
         ->addColumn('centre', function ($participant) {
-            return $participant->centre ? $participant->centre->name : 'N/A';
+            return $participant->centre ? $participant->centre->name : '-';
         })
         ->addColumn('actions', function ($participant) {
             return view('participants.actions', compact('participant'))->render();
@@ -150,7 +150,7 @@ public function filterByCentre($centreId)
             $sheet->setCellValue('K' . $row, $participant->commercial);
             $sheet->setCellValue('L' . $row, $participant->etat);
             $sheet->setCellValue('M' . $row, $participant->reste);
-            $sheet->setCellValue('N' . $row, $participant->centre->name ?? 'N/A');
+            $sheet->setCellValue('N' . $row, $participant->centre->name ?? '-');
             $sheet->setCellValue('O' . $row, $participant->created_at);
             $sheet->setCellValue('P' . $row, $participant->updated_at);
             $row++;

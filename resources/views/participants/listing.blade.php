@@ -159,13 +159,13 @@ $(document).ready(function() {
                 return '<div class="btn-group" role="group">' +
                     '<button type="button" class="btn btn-warning text-white btn-sm mr-2" onclick="editParticipant(' + row.id + ')">' +
                     '<i class="fa fa-edit mr-1"></i>Modifier</button>' +
-                    '<button type="button" class="btn btn-danger btn-sm ml-2" onclick="deleteParticipant(' + row.id + ')">' +
+                    '<button type="button" class="btn btn-danger btn-sm ml-2 mr-2" onclick="deleteParticipant(' + row.id + ')">' +
                     '<i class="fa fa-trash mr-1"></i>Supprimer</button>' +
                     '<button type="button" class="btn btn-success btn-sm mr-2" onclick="addPayment(' + row.id + ')">' +
                     '<i class="fa fa-dollar-sign mr-1"></i>Ajouter Paiement</button>' +
                     '<button type="button" class="btn btn-info btn-sm mr-2" onclick="printDiplome(' + row.id + ')">' +
                     '<i class="fa fa-graduation-cap mr-1"></i>Imprimer Diplôme</button>' +
-                    '<button type="button" class="btn btn-secondary btn-sm" onclick="printAttestation(' + row.id + ')">' +
+                    '<button type="button" class="btn btn-secondary btn-sm mr-2" onclick="printAttestation(' + row.id + ')">' +
                     '<i class="fa fa-certificate mr-1"></i>Imprimer Attestation</button>' +
                 '</div>';
             }}
