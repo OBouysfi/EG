@@ -92,6 +92,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('export', [ParticipantController::class, 'export'])->name('export');
         Route::get('centre/{centreId}', [ParticipantController::class, 'filterByCentre'])->name('byCentre');
         Route::get('region/{regionId}', [ParticipantController::class, 'filterByRegion'])->name('byRegion');
+        Route::get('/diplomes/{participant}/print', [ParticipantController::class, 'printDiplome'])->name('diplomes.print');
     });
 
     // Paiement routes

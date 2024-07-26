@@ -21,7 +21,7 @@
             text-align: center;
         }
         .container {
-            background: rgba(255, 255, 255, 0.8); /* Optional: To make the text more readable against the background */
+
             padding: 20px;
             border-radius: 10px;
         }
@@ -30,17 +30,19 @@
             margin-bottom: 20px;
         }
         p {
-            font-size: 24px;
-            margin: 10px 0;
+            font-size: 30px;
+            margin: 190px 0;
+        }
+        #formation {
+            margin: 180px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Attestation</h1>
-        <p>Nom complet: {{ $participant->nom_prenom }}</p>
+        <p>{{ $participant->nom_prenom }}</p>
         <p>Date Centre: {{ $participant->created_at->format('d/m/Y') }}</p>
-        <p>Nom de la formation: {{ $participant->formation }}</p>
+        {{-- <p id="formation">Nom de la formation: {{ $participant->formation }}</p> --}}
         <p>Catégorie: {{ $participant->categorie }}</p>
     </div>
 </body>

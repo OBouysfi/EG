@@ -3,48 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diplôme</title>
+    <title>Certificat de Formation</title>
     <style>
         @page {
-            size: A4 portrait;
+            size: A4 landscape;
+            margin: 0;
         }
         body {
             font-family: Arial, sans-serif;
-            background: url('{{ asset('assets/img/diplome.png') }}') no-repeat center center fixed;
-            background-size: cover;
+            background: url('{{ asset('assets/img/diplome.jpg') }}') no-repeat center center;
+            background-size: 100% 100%;
             margin: 0;
             height: 100vh;
             width: 100vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative;
+        }
+        .field {
+            position: absolute;
+            font-size: 16px;
+            font-weight: 700;
+        }
+        #nom {
+            top: 41%;
+            left: 13%;
+        }
+        #cin {
+            top: 44%;
+            left: 14%;
+        }
+        #date_naissance {
+            top: 50%;
+            left: 40%;
+        }
+        #lieu_naissance {
+            top: 50%;
+            right: 45%;
+        }
+        #formation {
+            top: 45%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
             text-align: center;
         }
-        .container {
-            background: rgba(255, 255, 255, 0.8); /* Optional: To make the text more readable against the background */
-            padding: 20px;
-            border-radius: 10px;
+        #annee {
+            bottom: 34.5%;
+            left: 21%;
         }
-        h1 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 24px;
-            margin: 10px 0;
+        #date_delivrance {
+            bottom: 30%;
+            left: 20%;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Diplôme</h1>
-        <p>Nom complet: {{ $participant->nom_prenom }}</p>
-        <p>N° CIN: {{ $participant->numero_cin }}</p>
-        <p>Date de Naissance: {{ $participant->date_naissance }}</p>
-        <p>Ville de Naissance: {{ $participant->ville_naissance }}</p>
-        <p>Date Centre: {{ $participant->created_at->format('d/m/Y') }}</p>
-        <p>Nom de la formation: {{ $participant->formation }}</p>
-        <p>Catégorie: {{ $participant->categorie }}</p>
-    </div>
+    <div id="nom" class="field">{{ $participant->nom_prenom }}</div>
+    <div id="cin" class="field">{{ $participant->numero_cin }}</div>
+    <div id="date_naissance" class="field">{{ $participant->date_naissance }}</div>
+    <div id="lieu_naissance" class="field">{{ $participant->ville_naissance }}</div>
+    <div id="annee" class="field">{{ $participant->created_at->format('Y') }}</div>
+    <div id="date_delivrance" class="field">{{ $participant->created_at->format('d/m/Y') }}</div>
 </body>
 </html>

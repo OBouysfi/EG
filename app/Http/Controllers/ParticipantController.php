@@ -158,4 +158,8 @@ class ParticipantController extends Controller
 
         return $response;
     }
+    public function printDiplome(Participant $participant)
+{
+    return view('participants.diplome', compact('participant'));
+}
 }

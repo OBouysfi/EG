@@ -24,9 +24,10 @@ class UpdatePaiementRequest extends FormRequest
     public function rules()
     {
         return [
-            'montant' => 'required|numeric',
-            'seance' => 'required|string|in:S1,S2,S3,S4,Centre',
-            'date_paiement' => 'required|date',
+            'participant_id' => 'exists:participants,id',
+            'montant' => 'numeric',
+            'seance' => 'string|in:S1,S2,S3,S4,Centre',
+            'date_paiement' => 'date',
         ];
     }
 }

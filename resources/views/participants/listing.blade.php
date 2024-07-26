@@ -200,30 +200,61 @@ $(document).ready(function() {
 
     $('#printButton').on('click', function() {
         var css = `
-            @page { size: auto; margin: 20mm; }
-            table { width: 100%; border-collapse: collapse; }
-            th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
-            th { background-color: #003F54; color: #fff; }
-        `;
+        @page { size: auto; margin: 20mm; }
+        body { zoom: 100%; -webkit-transform: scale(1); transform: scale(1); -webkit-transform-origin: 0 0; transform-origin: 0 0; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
+        th { background-color: #003F54; color: #fff; }
+    `;
 
-        var printWindow = window.open('', '', 'height=800,width=1100');
-        printWindow.document.write('<html><head><title>Print Table</title>');
-        printWindow.document.write('<style>' + css + '</style>');
-        printWindow.document.write('</head><body >');
-        printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Participants</h3>');
 
-        var tableClone = $('#participants-table').clone();
-        tableClone.find('thead th:nth-child(4), thead th:nth-child(5), thead th:nth-child(6), thead th:nth-child(8), thead th:nth-child(9), thead th:nth-child(15)').remove();
+    var printWindow = window.open('', '', 'height=800,width=1100');
+    printWindow.document.write('<html><head><title>Print Table</title>');
+    printWindow.document.write('<style>' + css + '</style>');
+    printWindow.document.write('</head><body >');
+    printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Participants</h3>');
+
+    var tableClone = $('#participants-table').clone();
+
+    // Remove columns that have no data
+    var emptyColumns = [];
+    tableClone.find('thead th').each(function(index) {
+        var isEmpty = true;
         tableClone.find('tbody tr').each(function() {
-            $(this).find('td:nth-child(4), td:nth-child(5), td:nth-child(6), td:nth-child(8), td:nth-child(9), td:nth-child(15)').remove();
+            if ($(this).find('td').eq(index).text().trim() !== '') {
+                isEmpty = false;
+                return false;
+            }
         });
-
-        printWindow.document.write(tableClone.prop('outerHTML'));
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.focus();
-        printWindow.print();
+        if (isEmpty) {
+            emptyColumns.push(index);
+        }
     });
+
+    // Remove the empty columns and the "Actions" column
+    emptyColumns.push(tableClone.find('thead th:contains("Actions")').index());
+
+    tableClone.find('thead th').each(function(index) {
+        if (emptyColumns.includes(index)) {
+            $(this).remove();
+        }
+    });
+
+    tableClone.find('tbody tr').each(function() {
+        $(this).find('td').each(function(index) {
+            if (emptyColumns.includes(index)) {
+                $(this).remove();
+            }
+        });
+    });
+
+    printWindow.document.write(tableClone.prop('outerHTML'));
+    printWindow.document.write('</body></html>');
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+});
+
 
     $('#editParticipantForm').on('submit', function(e) {
         e.preventDefault();
@@ -345,11 +376,18 @@ function addPayment(participantId) {
 }
 
 function printDiplome(participantId) {
-    window.location.href = '/diplomes/' + participantId + '/print';
+    var printWindow = window.open('/diplomes/' + participantId + '/print', '_blank');
+    printWindow.onload = function() {
+        printWindow.print();
+    };
 }
 
 function printAttestation(participantId) {
-    window.location.href = '/attestations/' + participantId + '/print';
+    var printWindow = window.open('/attestations/' + participantId + '/print', '_blank');
+    printWindow.onload = function() {
+        printWindow.print();
+    };
 }
+
 </script>
 @endsection
