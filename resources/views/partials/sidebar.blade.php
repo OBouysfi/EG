@@ -92,12 +92,15 @@
                         <span class="hide-menu">Logout</span>
                     </a>
                 </li>
+                @if(auth()->user()->hasRole('super-admin'))
                 <li class="sidebar-item">
                     <a class="sidebar-link sidebar-link" href="{{ route('role_permissions.index') }}" aria-expanded="false">
                         <i data-feather="lock" class="feather-icon"></i>
                         <span class="hide-menu">Ajouter un administrateur</span>
                     </a>
                 </li>
+                @endif
+
             </ul>
         </nav>
         <!-- End Sidebar navigation-->
