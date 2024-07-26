@@ -53,13 +53,19 @@
         }
         p {
             font-size: 23px;
-            margin: 50px 0;
+            margin-bottom: 120px;
+            font-weight: 700;
         }
         #formation {
             margin: 180px 0;
         }
         #p-center{
             font-size: 18px;
+            margin-bottom: 120px;
+        }
+        #p-categ{
+            font-size: 18px;
+            margin-bottom: 40px;
         }
     </style>
 </head>
@@ -70,7 +76,7 @@
             <p>{{ $participant->nom_prenom }}</p>
             <p id="p-center">Date Centre: {{ $participant->created_at->format('d/m/Y') }}</p>
             {{-- <p id="formation">Nom de la formation: {{ $participant->formation }}</p> --}}
-            <p id="p-center">Catégorie: {{ $participant->categorie }}</p>
+            <p id="p-categ">Catégorie: {{ $participant->categorie }}</p>
         </div>
     </div>
 </body>
