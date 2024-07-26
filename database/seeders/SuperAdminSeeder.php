@@ -17,28 +17,36 @@ class SuperAdminSeeder extends Seeder
     public function run()
     {
         // Créer un super admin
-        $superAdmin = User::create([
+        $superAdmin = User::firstOrCreate([
+            'email' => 'obouysfi@gmail.com'
+        ], [
             'name' => 'Othman Bouysfi',
-            'email' => 'obouysfi@gmail.com',
             'password' => bcrypt('OBouysfi@'),
         ]);
 
-        // Créer les permissions
-        Permission::create(['name' => 'add regions']);
-        Permission::create(['name' => 'delete regions']);
-        Permission::create(['name' => 'add centres']);
-        Permission::create(['name' => 'delete centres']);
-        Permission::create(['name' => 'add participants']);
-        Permission::create(['name' => 'add payments']);
-        Permission::create(['name' => 'edit payments']);
-        Permission::create(['name' => 'edit participants']);
-        Permission::create(['name' => 'print state']);
-        Permission::create(['name' => 'print diploma']);
-        Permission::create(['name' => 'print certificate']);
+        // Liste des permissions à créer
+        $permissions = [
+            'add regions',
+            'delete regions',
+            'add centres',
+            'delete centres',
+            'add participants',
+            'add payments',
+            'edit payments',
+            'edit participants',
+            'print state',
+            'print diploma',
+            'print certificate',
+        ];
+
+        // Créer les permissions si elles n'existent pas
+        foreach ($permissions as $permission) {
+            Permission::firstOrCreate(['name' => $permission, 'guard_name' => 'web']);
+        }
 
         // Créer les rôles et leur assigner des permissions
-        $admin1 = Role::create(['name' => 'admin1']);
-        $admin1->givePermissionTo([
+        $admin1 = Role::firstOrCreate(['name' => 'admin1']);
+        $admin1->syncPermissions([
             'add regions',
             'delete regions',
             'add centres',
@@ -52,8 +60,8 @@ class SuperAdminSeeder extends Seeder
             'print certificate',
         ]);
 
-        $admin2 = Role::create(['name' => 'admin2']);
-        $admin2->givePermissionTo([
+        $admin2 = Role::firstOrCreate(['name' => 'admin2']);
+        $admin2->syncPermissions([
             'add centres',
             'add participants',
             'print state',
@@ -62,11 +70,10 @@ class SuperAdminSeeder extends Seeder
         ]);
 
         // Créer le rôle super admin et lui assigner toutes les permissions
-        $superAdminRole = Role::create(['name' => 'super admin']);
-        $superAdminRole->givePermissionTo(Permission::all());
+        $superAdminRole = Role::firstOrCreate(['name' => 'super-admin']);
+        $superAdminRole->syncPermissions(Permission::all());
 
         // Assigner le rôle super admin à l'utilisateur créé
         $superAdmin->assignRole($superAdminRole);
     }
 }
-

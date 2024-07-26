@@ -27,17 +27,17 @@ class ParticipantController extends Controller
 
     public function data(Request $request)
 {
-    $query = Participant::with('centre');
+    $query = Participant::with('centre')->select('participants.*');
 
-    if ($request->has('centre_id') && $request->centre_id != '') {
-        $query->where('centre_id', $request->centre_id);
-    }
+        if ($request->has('centre_id') && $request->centre_id != '') {
+            $query->where('centre_id', $request->centre_id);
+        }
 
-    if ($request->has('region_id') && $request->region_id != '') {
-        $query->whereHas('centre', function ($q) use ($request) {
-            $q->where('region_id', $request->region_id);
-        });
-    }
+        if ($request->has('region_id') && $request->region_id != '') {
+            $query->whereHas('centre', function ($q) use ($request) {
+                $q->where('region_id', $request->region_id);
+            });
+        }
 
     return DataTables::of($query)
         ->addColumn('centre', function ($participant) {
@@ -48,8 +48,19 @@ class ParticipantController extends Controller
         })
         ->make(true);
 }
+public function filterByCentre($centreId)
+    {
+        $centres = Centre::all();
+        $regions = Region::all();
+        return view('participants.listing', compact('centres', 'regions', 'centreId'));
+    }
 
-
+    public function filterByRegion($regionId)
+    {
+        $centres = Centre::all();
+        $regions = Region::all();
+        return view('participants.listing', compact('centres', 'regions', 'regionId'));
+    }
     public function create()
     {
         $centres = Centre::all();
