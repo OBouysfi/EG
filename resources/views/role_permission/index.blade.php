@@ -48,6 +48,11 @@
                                     <td>
                                         <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#manageRolesModal" data-user-id="{{ $user->id }}">Gérer Rôles</button>
                                         <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#managePermissionsModal" data-user-id="{{ $user->id }}">Gérer Permissions</button>
+                                        <form action="{{ route('users.destroy', $user) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');" style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">Supprimer</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @endforeach

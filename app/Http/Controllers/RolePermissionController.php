@@ -63,5 +63,20 @@ class RolePermissionController extends Controller
 
         return redirect()->back()->with('success', 'Utilisateur créé avec succès.');
     }
+    public function destroy(User $user)
+    {
+        // Check if the user is not trying to delete themselves
+        if (auth()->id() === $user->id) {
+            return redirect()->back()->with('error', 'Vous ne pouvez pas supprimer votre propre compte.');
+        }
 
+        // Remove all roles and permissions
+        $user->roles()->detach();
+        $user->permissions()->detach();
+
+        // Delete the user
+        $user->delete();
+
+        return redirect()->back()->with('success', 'Utilisateur supprimé avec succès.');
+    }
 }
