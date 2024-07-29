@@ -97,7 +97,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('{participant}/edit', [ParticipantController::class, 'edit'])->name('edit');
         Route::put('{participant}', [ParticipantController::class, 'update'])->name('update');
         Route::delete('{participant}', [ParticipantController::class, 'destroy'])->name('destroy');
-        Route::post('{participant}/paiements', [ParticipantController::class, 'storePaiement'])->name('participants.storePaiement');
+        Route::post('{participant}/paiements', [ParticipantController::class, 'storePaiement'])->name('storePaiement');
         Route::get('export', [ParticipantController::class, 'export'])->name('export');
         Route::get('centre/{centreId}', [ParticipantController::class, 'filterByCentre'])->name('byCentre');
         Route::get('region/{regionId}', [ParticipantController::class, 'filterByRegion'])->name('byRegion');

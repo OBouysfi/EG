@@ -97,20 +97,19 @@ public function filterByCentre($centreId)
         return response()->json(['message' => 'Participant supprimé avec succès']);
     }
 
-        public function storePaiement(Request $request, Participant $participant)
-        {
-            $validated = $request->validate([
-                'participant_id' => 'required|exists:participants,id',
-                'seance' => 'required|string',
-                'montant' => 'required|numeric',
-                'date_paiement' => 'required|date',
-            ]);
+    public function storePaiement(Request $request, Participant $participant)
+    {
+        $validated = $request->validate([
+            'seance' => 'required|string',
+            'montant' => 'required|numeric',
+            'date_paiement' => 'required|date',
+        ]);
 
-            $participant->paiements()->create($validated);
+        $paiement = new Paiement($validated);
+        $participant->paiements()->save($paiement);
 
-            return redirect()->route('participants.index')->with('success', 'Paiement ajouté avec succès');
-        }
-
+        return response()->json(['message' => 'Paiement ajouté avec succès']);
+    }
 
     public function export()
     {

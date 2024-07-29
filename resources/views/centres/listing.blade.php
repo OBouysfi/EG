@@ -139,7 +139,7 @@ $(document).ready(function() {
     `;
 
     var printWindow = window.open('', '', 'height=800,width=1100');
-    printWindow.document.write('<html><head><title>Print Table</title>');
+    printWindow.document.write('<html><head><title></title>');
     printWindow.document.write('<style>' + css + '</style>');
     printWindow.document.write('</head><body >');
     printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Centres</h3>');

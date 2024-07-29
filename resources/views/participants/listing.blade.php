@@ -1,3 +1,5 @@
+<!-- resources/views/participants/listing.blade.php -->
+
 @extends('layouts.app')
 
 @section('title', 'Liste des Participants')
@@ -89,19 +91,6 @@
                                     <th scope="col">Téléphone</th>
                                     <th scope="col">Catégorie</th>
                                     <th scope="col">Montant Inscription</th>
-                                    <th scope="col">S1</th>
-                                    <th scope="col">Date S1</th>
-                                    <th scope="col">S2</th>
-                                    <th scope="col">Date S2</th>
-                                    <th scope="col">S3</th>
-                                    <th scope="col">Date S3</th>
-                                    <th scope="col">S4</th>
-                                    <th scope="col">Date S4</th>
-                                    <th scope="col">Centre</th>
-                                    <th scope="col">Date Centre</th>
-                                    <th scope="col">Commercial</th>
-                                    <th scope="col">État</th>
-                                    <th scope="col">Reste</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -114,7 +103,8 @@
 </div>
 
 @include('participants.edit')
-@include('participants.paiement')
+@include('participants.add_payment')
+
 
 @endsection
 
@@ -142,19 +132,6 @@ $(document).ready(function() {
             { data: 'telephone', name: 'telephone' },
             { data: 'categorie', name: 'categorie' },
             { data: 'montant_inscription', name: 'montant_inscription' },
-            { data: 's1', name: 's1' },
-            { data: 'date_s1', name: 'date_s1' },
-            { data: 's2', name: 's2' },
-            { data: 'date_s2', name: 'date_s2' },
-            { data: 's3', name: 's3' },
-            { data: 'date_s3', name: 'date_s3' },
-            { data: 's4', name: 'centre' },
-            { data: 'date_s4', name: 'date_s4' },
-            { data: 'centre', name: 'centre' },
-            { data: 'date_centre', name: 'date_centre' },
-            { data: 'commercial', name: 'commercial' },
-            { data: 'etat', name: 'etat' },
-            { data: 'reste', name: 'reste' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
                 return '<div class="btn-group" role="group">' +
                     '<button type="button" class="btn btn-warning text-white btn-sm mr-2" onclick="editParticipant(' + row.id + ')">' +
@@ -194,6 +171,34 @@ $(document).ready(function() {
         }
     });
 
+    $('#addPaymentForm').on('submit', function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var url = form.attr('action');
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: form.serialize(),
+            success: function(response) {
+                $('#addPaymentModal').modal('hide');
+                table.ajax.reload();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Succès',
+                    text: response.message,
+                });
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'Une erreur est survenue lors de l\'ajout du paiement.',
+                });
+            }
+        });
+    });
+
     $('#centreFilter, #regionFilter').change(function() {
         table.ajax.reload();
     });
@@ -207,54 +212,52 @@ $(document).ready(function() {
         th { background-color: #003F54; color: #fff; }
     `;
 
+        var printWindow = window.open('', '', 'height=800,width=1100');
+        printWindow.document.write('<html><head><title></title>');
+        printWindow.document.write('<style>' + css + '</style>');
+        printWindow.document.write('</head><body >');
+        printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Participants</h3>');
 
-    var printWindow = window.open('', '', 'height=800,width=1100');
-    printWindow.document.write('<html><head><title>Print Table</title>');
-    printWindow.document.write('<style>' + css + '</style>');
-    printWindow.document.write('</head><body >');
-    printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Participants</h3>');
+        var tableClone = $('#participants-table').clone();
 
-    var tableClone = $('#participants-table').clone();
-
-    // Remove columns that have no data
-    var emptyColumns = [];
-    tableClone.find('thead th').each(function(index) {
-        var isEmpty = true;
-        tableClone.find('tbody tr').each(function() {
-            if ($(this).find('td').eq(index).text().trim() !== '') {
-                isEmpty = false;
-                return false;
+        // Remove columns that have no data
+        var emptyColumns = [];
+        tableClone.find('thead th').each(function(index) {
+            var isEmpty = true;
+            tableClone.find('tbody tr').each(function() {
+                if ($(this).find('td').eq(index).text().trim() !== '') {
+                    isEmpty = false;
+                    return false;
+                }
+            });
+            if (isEmpty) {
+                emptyColumns.push(index);
             }
         });
-        if (isEmpty) {
-            emptyColumns.push(index);
-        }
-    });
 
-    // Remove the empty columns and the "Actions" column
-    emptyColumns.push(tableClone.find('thead th:contains("Actions")').index());
+        // Remove the empty columns and the "Actions" column
+        emptyColumns.push(tableClone.find('thead th:contains("Actions")').index());
 
-    tableClone.find('thead th').each(function(index) {
-        if (emptyColumns.includes(index)) {
-            $(this).remove();
-        }
-    });
-
-    tableClone.find('tbody tr').each(function() {
-        $(this).find('td').each(function(index) {
+        tableClone.find('thead th').each(function(index) {
             if (emptyColumns.includes(index)) {
                 $(this).remove();
             }
         });
+
+        tableClone.find('tbody tr').each(function() {
+            $(this).find('td').each(function(index) {
+                if (emptyColumns.includes(index)) {
+                    $(this).remove();
+                }
+            });
+        });
+
+        printWindow.document.write(tableClone.prop('outerHTML'));
+        printWindow.document.write('</body></html>');
+        printWindow.document.close();
+        printWindow.focus();
+        printWindow.print();
     });
-
-    printWindow.document.write(tableClone.prop('outerHTML'));
-    printWindow.document.write('</body></html>');
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-});
-
 
     $('#editParticipantForm').on('submit', function(e) {
         e.preventDefault();
@@ -371,6 +374,7 @@ function editParticipant(participantId) {
 }
 
 function addPayment(participantId) {
+    $('#addPaymentForm').attr('action', '/participants/' + participantId + '/paiements');
     $('#addPaymentForm').find('input[name="participant_id"]').val(participantId);
     $('#addPaymentModal').modal('show');
 }
