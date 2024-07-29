@@ -14,9 +14,9 @@
     <link rel="manifest" href="manifest.json" />
 
     <!-- Favicons -->
-    <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
-    <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
-    <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
+    <link rel="apple-touch-icon" href="{{ asset('assets_custom/img/favicon180.png')}}" sizes="180x180">
+    <link rel="icon" href="{{ asset('assets_custom/img/favicon32.png')}}" sizes="32x32" type="image/png">
+    <link rel="icon" href="{{ asset('assets_custom/img/favicon16.png') }}" sizes="16x16" type="image/png">
 
     <!-- Google fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,16 +26,16 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
 
     <!-- chosen css -->
-    <link rel="stylesheet" href="assets/vendor/chosen_v1.8.7/chosen.min.css">
+    <link rel="stylesheet" href="{{ asset('assets_custom/vendor/chosen_v1.8.7/chosen.min.css')}}">
 
     <!-- date range picker -->
-    <link rel="stylesheet" href="assets/vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" href="{{ asset('assets_custom/vendor/daterangepicker/daterangepicker.css')}}">
 
     <!-- swiper carousel css -->
-    <link rel="stylesheet" href="assets/vendor/swiper-7.3.1/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{{ asset('assets_custom/vendor/swiper-7.3.1/swiper-bundle.min.css')}}">
 
     <!-- style css for this template -->
-    <link href="assets/scss/style.css" rel="stylesheet">
+    <link href="{{ asset('assets_custom/scss/style.css') }}" rel="stylesheet">
 </head>
 
 <body class="d-flex flex-column h-100 sidebar-pushcontent sidebar-filled" data-sidebarstyle="sidebar-pushcontent">
@@ -49,7 +49,7 @@
                 <h6 class="mb-4 text-secondary">Admin Dashboard UIUX</h6>
                 <div class="logo-square animated mb-4">
                     <div class="icon-logo">
-                        <img src="assets/img/logo-icon.png" alt="" />
+                        <img src="{{ asset('assets_custom/img/logo-icon.png') }}" alt="" />
                     </div>
                 </div>
                 <p class="text-secondary small">Petal of flower being ready to <span class="text-gradient">blossom</span></p>
@@ -85,7 +85,7 @@
                     </button>
                     <a class="navbar-brand ms-2" href="home.html">
                         <div class="row">
-                            <div class="col-auto"><span class="logo-icon"><img src="assets/img/logo-icon.png" class="mx-100" alt="" /></span></div>
+                            <div class="col-auto"><span class="logo-icon"><img src="{{ asset('assets_custom/img/logo-icon.png') }}" class="mx-100" alt="" /></span></div>
                             <div class="col ps-0 align-self-center d-none d-sm-block">
                                 <h5 class="fw-normal text-dark mb-0">AdminUX</h5>
                                 <p class="small text-secondary">Admin App UI</p>
@@ -453,26 +453,139 @@
                                         <div class="col-auto">
                                             <a href="#" class="btn btn-sm btn-outline-secondary border">View all</a>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12 col-sm-6">
-                                            <div class="row mb-3">
-                                                <div class="col-auto">
-                                                    <div class="avatar avatar-50 rounded bg-light-theme coverimg">
-                                                        <img src="assets/img/user-2.jpg" alt="" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-8 ps-0 align-self-center">
-                                                    <a href="#" class="text-truncate">Ms. Switty David</a>
-                                                    <p class="text-truncate text-secondary small">US, UK Recruiter</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-auto">
-                                                    <div class="avatar avatar-50 rounded bg-light-theme coverimg">
-                                                        <img src="assets/img/user-3.jpg" alt="" />
-                                                    </div>
-                                                </div>
+                                    </div><div class="row">
+                                      <div class="col-12 col-sm-6">
+                                          <div class="row mb-3">
+                                              <div class="col-auto">
+                                                  <div class="avatar avatar-50 rounded bg-light-theme coverimg">
+                                                      <img src="{{ asset('assets_custom/img/user-2.jpg') }}" alt="" />
+                                                  </div>
+                                              </div>
+                                              <div class="col-8 ps-0 align-self-center">
+                                                  <a href="#" class="text-truncate">Ms. Switty David</a>
+                                                  <p class="text-truncate text-secondary small">US, UK Recruiter</p>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-auto">
+                                                  <div class="avatar avatar-50 rounded bg-light-theme coverimg">
+                                                      <img src="{{ asset('assets_custom/img/user-3.jpg') }}" alt="" />
+                                                  </div>
+                                              </div>
+                                              <div class="col-8 ps-0 align-self-center">
+                                                  <a href="#" class="text-truncate">Dyna Roosevelt</a>
+                                                  <p class="text-truncate text-secondary small">Marketing Head at Linmongas</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                      <div class="col-12 col-sm-6">
+                                          <div class="row mb-3">
+                                              <div class="col-auto">
+                                                  <div class="avatar avatar-50 rounded bg-light-theme coverimg">
+                                                      <img src="{{ asset('assets_custom/img/user-4.jpg') }}" alt="" />
+                                                  </div>
+                                              </div>
+                                              <div class="col-8 ps-0 align-self-center">
+                                                  <a href="#" class="text-truncate">Mr. Freddy Johnson</a>
+                                                  <p class="text-truncate text-secondary small">Project Manager</p>
+                                              </div>
+                                          </div>
+                                          <div class="row">
+                                              <div class="col-auto">
+                                                  <div class="avatar avatar-50 rounded bg-light-theme coverimg">
+                                                      <img src="{{ asset('assets_custom/img/user-1.jpg') }}" alt="" />
+                                                  </div>
+                                              </div>
+                                              <div class="col-8 ps-0 align-self-center">
+                                                  <a href="#" class="text-truncate">The Maxartkiller</a>
+                                                  <p class="text-truncate text-secondary small">CEO Maxartkiller</p>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  </div>
+                                  </div>
+                                  <div class="tab-pane fade" id="searchorders1" role="tabpanel" aria-labelledby="searchorders1-tab">
+                                      <div class="container-fluid">
+                                          <div class="row">
+                                              <div class="col-12 col-sm-6">
+                                                  <div class="row mb-3">
+                                                      <div class="col-auto">
+                                                          <div class="avatar avatar-50 rounded bg-light-theme">
+                                                              <i class="bi bi-bag fs-5"></i>
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-8 ps-0 align-self-center">
+                                                          <a href="#" class="text-truncate">#EDR0021 by John Merchant</a>
+                                                          <p class="text-truncate text-secondary small">2 items, $250.00, 09 December 2021</p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="row">
+                                                      <div class="col-auto">
+                                                          <div class="avatar avatar-50 rounded bg-light-theme">
+                                                              <i class="bi bi-basket fs-5"></i>
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-8 ps-0 align-self-center">
+                                                          <a href="#" class="text-truncate">#EDR0026 by Will Smith</a>
+                                                          <p class="text-truncate text-secondary small">4 items, $530.00, 18 December 2021</p>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                              <div class="col-12 col-sm-6">
+                                                  <div class="row mb-3">
+                                                      <div class="col-auto">
+                                                          <div class="avatar avatar-50 rounded bg-light-theme">
+                                                              <i class="bi bi-cart fs-5"></i>
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-8 ps-0 align-self-center">
+                                                          <a href="#" class="text-truncate">#EDR0030 by Switty David</a>
+                                                          <p class="text-truncate text-secondary small">1 item, $50.00, 20 December 2021</p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="row">
+                                                      <div class="col-auto">
+                                                          <div class="avatar avatar-50 rounded bg-light-theme">
+                                                              <i class="bi bi-cart4 fs-5"></i>
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-8 ps-0 align-self-center">
+                                                          <a href="#" class="text-truncate">#EDR0041 by Mr. Walk Wolf</a>
+                                                          <p class="text-truncate text-secondary small">3 items, $130.00, 16 December 2021</p>
+                                                      </div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="tab-pane fade" id="searchcontacts1" role="tabpanel" aria-labelledby="searchcontacts1-tab">
+                                      <div class="container-fluid">
+                                          <div class="row">
+                                              <div class="col-12 col-sm-6">
+                                                  <div class="row mb-3">
+                                                      <div class="col-auto">
+                                                          <div class="avatar avatar-50 rounded bg-light-theme coverimg">
+                                                              <img src="{{ asset('assets_custom/img/user-2.jpg') }}" alt="" />
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-8 ps-0 align-self-center">
+                                                          <a href="#" class="text-truncate">Ms. Switty David</a>
+                                                          <p class="text-truncate text-secondary small">US, UK Recruiter</p>
+                                                      </div>
+                                                  </div>
+                                                  <div class="row">
+                                                      <div class="col-auto">
+                                                          <div class="avatar avatar-50 rounded bg-light-theme coverimg">
+                                                              <img src="{{ asset('assets_custom/img/user-3.jpg') }}" alt="" />
+                                                          </div>
+                                                      </div>
+                                                      <div class="col-8 ps-0 align-self-center">
+                                                          <a href="#" class="text-truncate">Dyna Roosevelt</a>
+                                                          <p class="text-truncate text-secondary small">Marketing Head at Linmongas</p>
+                                                      </div>
+                                                  </div>
+                                              </div>                                  
                                                 <div class="col-8 ps-0 align-self-center">
                                                     <a href="#" class="text-truncate">Dyna Roosevelt</a>
                                                     <p class="text-truncate text-secondary small">Marketing Head at Linmongas</p>
@@ -483,7 +596,7 @@
                                             <div class="row mb-3">
                                                 <div class="col-auto">
                                                     <div class="avatar avatar-50 rounded bg-light-theme coverimg">
-                                                        <img src="assets/img/user-4.jpg" alt="" />
+                                                        <img src="{{ asset('assets_costum/img/user-4.jpg') }}" alt="" />
                                                     </div>
                                                 </div>
                                                 <div class="col-8 ps-0 align-self-center">
@@ -494,115 +607,7 @@
                                             <div class="row">
                                                 <div class="col-auto">
                                                     <div class="avatar avatar-50 rounded bg-light-theme coverimg">
-                                                        <img src="assets/img/user-1.jpg" alt="" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-8 ps-0 align-self-center">
-                                                    <a href="#" class="text-truncate">The Maxartkiller</a>
-                                                    <p class="text-truncate text-secondary small">CEO Maxartkiller</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="searchorders1" role="tabpanel" aria-labelledby="searchorders1-tab">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-12 col-sm-6">
-                                            <div class="row mb-3">
-                                                <div class="col-auto">
-                                                    <div class="avatar avatar-50 rounded bg-light-theme">
-                                                        <i class="bi bi-bag fs-5"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-8 ps-0 align-self-center">
-                                                    <a href="#" class="text-truncate">#EDR0021 by John Merchant</a>
-                                                    <p class="text-truncate text-secondary small">2 items, $250.00, 09 December 2021</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-auto">
-                                                    <div class="avatar avatar-50 rounded bg-light-theme">
-                                                        <i class="bi bi-basket fs-5"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-8 ps-0 align-self-center">
-                                                    <a href="#" class="text-truncate">#EDR0026 by Will Smith</a>
-                                                    <p class="text-truncate text-secondary small">4 items, $530.00, 18 December 2021</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="row mb-3">
-                                                <div class="col-auto">
-                                                    <div class="avatar avatar-50 rounded bg-light-theme">
-                                                        <i class="bi bi-cart fs-5"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-8 ps-0 align-self-center">
-                                                    <a href="#" class="text-truncate">#EDR0030 by Switty David</a>
-                                                    <p class="text-truncate text-secondary small">1 items, $50.00, 20 December 2021</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-auto">
-                                                    <div class="avatar avatar-50 rounded bg-light-theme">
-                                                        <i class="bi bi-cart4 fs-5"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="col-8 ps-0 align-self-center">
-                                                    <a href="#" class="text-truncate">#EDR0041 by Mr.Walk Wolf</a>
-                                                    <p class="text-truncate text-secondary small">3 items, $130.00, 16 December 2021</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="searchcontacts1" role="tabpanel" aria-labelledby="searchcontacts1-tab">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-12 col-sm-6">
-                                            <div class="row mb-3">
-                                                <div class="col-auto">
-                                                    <div class="avatar avatar-50 rounded bg-light-theme coverimg">
-                                                        <img src="assets/img/user-2.jpg" alt="" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-8 ps-0 align-self-center">
-                                                    <a href="#" class="text-truncate">Ms. Switty David</a>
-                                                    <p class="text-truncate text-secondary small">US, UK Recruiter</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-auto">
-                                                    <div class="avatar avatar-50 rounded bg-light-theme coverimg">
-                                                        <img src="assets/img/user-3.jpg" alt="" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-8 ps-0 align-self-center">
-                                                    <a href="#" class="text-truncate">Dyna Roosevelt</a>
-                                                    <p class="text-truncate text-secondary small">Marketing Head at Linmongas</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-sm-6">
-                                            <div class="row mb-3">
-                                                <div class="col-auto">
-                                                    <div class="avatar avatar-50 rounded bg-light-theme coverimg">
-                                                        <img src="assets/img/user-4.jpg" alt="" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-8 ps-0 align-self-center">
-                                                    <a href="#" class="text-truncate">Mr. Freddy Johnson</a>
-                                                    <p class="text-truncate text-secondary small">Project Manager</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-auto">
-                                                    <div class="avatar avatar-50 rounded bg-light-theme coverimg">
-                                                        <img src="assets/img/user-1.jpg" alt="" />
+                                                        <img src="{{ asset('assets_custom/img/user-1.jpg') }}" alt="" />
                                                     </div>
                                                 </div>
                                                 <div class="col-8 ps-0 align-self-center">
@@ -710,7 +715,7 @@
                         <div class="col-auto align-self-center d-none d-xxxl-block">
                             <div class="dropdown">
                                 <a class="dd-arrow-none dropdown-toggle tempdata" id="selectCity" data-bs-toggle="dropdown" aria-expanded="false" role="button">
-                                    <img src="assets/img/cloud-sun.png" alt="" class="vm me-2 tempimage" id="tempimage" />
+                                    <img src="{{ asset('assets_custom/img/cloud-sun.png') }}" alt="" class="vm me-2 tempimage" id="tempimage" />
                                     <span class="fw-bold text-dark" id="temperature">46</span><span class="text-uppercase small"> <sup>0</sup>C</span>
                                     <span class="fw-normal d-none" id="city">New York</span> <i class="bi bi-pencil small ms-1 vm"></i>
                                 </a>
@@ -831,7 +836,7 @@
                                     <div class="row">
                                         <div class="col-auto align-self-center">
                                             <figure class="avatar avatar-40 rounded-circle coverimg vm">
-                                                <img src="assets/img/user-1.jpg" alt="" id="userphotoonboarding2" />
+                                                <img src="{{ asset('assets_custom/img/user-1.jpg') }}" alt="" id="userphotoonboarding2" />
                                             </figure>
                                         </div>
                                         <div class="col ps-0 align-self-center d-none d-lg-block">
@@ -850,7 +855,7 @@
                                         <div class="row">
                                             <div class="col-auto">
                                                 <figure class="avatar avatar-50 rounded-circle coverimg vm">
-                                                    <img src="assets/img/user-1.jpg" alt="" id="userphotoonboarding3" />
+                                                    <img src="{{ asset('assets_custom/img/user-1.jpg') }}" alt="" id="userphotoonboarding3" />
                                                 </figure>
                                             </div>
                                             <div class="col align-self-center ps-0">
