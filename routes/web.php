@@ -12,6 +12,8 @@ use App\Http\Controllers\AttestationController;
 use App\Http\Controllers\DiplomeController;
 use App\Http\Controllers\RolePermissionController;
 
+
+Route::delete('/users/{user}', [RolePermissionController::class, 'destroy'])->name('users.destroy');
 Route::middleware(['auth', 'role:super-admin'])->group(function () {
     Route::get('/role-permissions', [RolePermissionController::class, 'index'])->name('role_permissions.index');
     Route::post('/role-permissions/assign-role/{user}', [RolePermissionController::class, 'assignRole'])->name('role_permissions.assign_role');
@@ -88,7 +90,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('{participant}/edit', [ParticipantController::class, 'edit'])->name('edit');
         Route::put('{participant}', [ParticipantController::class, 'update'])->name('update');
         Route::delete('{participant}', [ParticipantController::class, 'destroy'])->name('destroy');
-        Route::post('{participant}/paiements', [ParticipantController::class, 'storePaiement'])->name('storePaiement');
+        Route::post('{participant}/paiements', [ParticipantController::class, 'storePaiement'])->name('participants.storePaiement');
         Route::get('export', [ParticipantController::class, 'export'])->name('export');
         Route::get('centre/{centreId}', [ParticipantController::class, 'filterByCentre'])->name('byCentre');
         Route::get('region/{regionId}', [ParticipantController::class, 'filterByRegion'])->name('byRegion');
