@@ -18,8 +18,26 @@
         border-radius: 8px !important;
     }
     .table thead th {
-        background-color: #003F54;
+    white-space: nowrap;
+    border-right: 3px solid #ffffff;
+    }
+    .table thead tr {
+        background: linear-gradient(to right, #8971ea, #7f72ea, #7574ea, #6a75e9, #5f76e8);
         color: #ffffff;
+        white-space: nowrap;
+    }
+    .table thead th:first-child {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+    .table thead th:last-child {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+    .table tbody td {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .table-hover tbody tr:hover {
         background-color: #f5f5f5;
@@ -47,6 +65,12 @@
             top: 0;
         }
     }
+    #addToTable{
+        background: none !important; 
+        border: 1px solid #5f76e8 !important; 
+        color: #5f76e8;
+        border-radius: 20px !important;
+    }
 </style>
 
 @section('content')
@@ -58,13 +82,13 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h3 class="mb-0 text-dark">Liste des Paiements</h3>
                         <div>
-                            <a href="{{ route('paiements.create') }}" class="btn btn-primary" style="background: #004F6D !important;">
+                            <a href="{{ route('paiements.create') }}" class="btn btn-primary" id="addToTable">
                                 <i class="fa fa-plus"></i> Ajouter
                             </a>
-                            <button class="btn btn-secondary" style="background: #003F49;">
+                            <button class="btn btn-secondary" style="border-radius:20px !important; background: linear-gradient(to right, #8971ea, #7f72ea, #7574ea, #6a75e9, #5f76e8);">
                                 <i class="fa fa-download"></i> Télécharger
                             </button>
-                            <button id="printButton" class="btn btn-info" style="background: #006064;">
+                            <button id="printButton" class="btn btn-info" style="border-radius:20px; background: linear-gradient(to right, #8971ea, #7f72ea, #7574ea, #6a75e9, #5f76e8);">
                                 <i class="fa fa-print"></i> Imprimer
                             </button>
                         </div>

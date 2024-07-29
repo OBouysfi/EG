@@ -24,16 +24,6 @@
                         </nav>
                     </div>
                 </div>
-                <div class="col-5 align-self-center">
-                    <div class="customize-input float-right">
-                        <select
-                            class="custom-select custom-select-set form-control bg-white border-0 custom-shadow custom-radius">
-                            <option selected>Aug 19</option>
-                            <option value="1">July 19</option>
-                            <option value="2">Jun 19</option>
-                        </select>
-                    </div>
-                </div>
             </div>
         </div>
     
@@ -258,10 +248,11 @@
                                                 </a>
                                             </div>
                                             <div class="ml-3 mt-2">
-                                                <h5 class="text-dark font-weight-medium mb-2">{{ $payment->participant->name }}</h5>
+                                                <h5 class="text-dark font-weight-medium mb-2">{{ optional($payment->participant)->name ?? '' }}</h5>
                                                 <p class="font-14 mb-2 text-muted">{{ $payment->amount }} MAD payé le {{ $payment->date ? $payment->date->format('d/m/Y') : '-' }}</p>
                                                 <span class="font-weight-light font-14 text-muted">{{ $payment->date ? $payment->date->diffForHumans() : 'Date inconnue' }}</span>
                                             </div>
+                                            
                                         </div>
                                     @endforeach
                                 @endif
