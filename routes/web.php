@@ -10,10 +10,17 @@ use App\Http\Controllers\PaiementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttestationController;
 use App\Http\Controllers\DiplomeController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 
-
+//supprimeruser
 Route::delete('/users/{user}', [RolePermissionController::class, 'destroy'])->name('users.destroy');
+
+Route::get('/account', [UserController::class, 'index'])->name('user');
+
+
 Route::middleware(['auth', 'role:super-admin'])->group(function () {
     Route::get('/role-permissions', [RolePermissionController::class, 'index'])->name('role_permissions.index');
     Route::post('/role-permissions/assign-role/{user}', [RolePermissionController::class, 'assignRole'])->name('role_permissions.assign_role');
