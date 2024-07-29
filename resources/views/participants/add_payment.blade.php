@@ -1,16 +1,16 @@
-<div class="modal fade" id="addPaiementModal" tabindex="-1" role="dialog" aria-labelledby="addPaiementModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<!-- Modal Ajouter Paiement -->
+<div class="modal fade" id="addPaymentModal" tabindex="-1" aria-labelledby="addPaymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addPaiementModalLabel">Ajouter Paiement</h5>
+                <h5 class="modal-title" id="addPaymentModalLabel">Ajouter Paiement</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addPaiementForm">
+                <form id="addPaymentForm" method="POST">
                     @csrf
-                    <input type="hidden" id="participantId" name="participant_id">
                     <div class="form-group">
                         <label for="seance">Séance</label>
                         <select class="form-control" id="seance" name="seance" required>
