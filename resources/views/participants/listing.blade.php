@@ -140,6 +140,9 @@
                                     <th scope="col">Téléphone</th>
                                     <th scope="col">Catégorie</th>
                                     <th scope="col">Montant Inscription</th>
+                                    <th scope="col">Reste</th>
+                                    <th scope="col">Commercial</th>
+                                    <th scope="col">État</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -182,6 +185,9 @@ $(document).ready(function() {
             { data: 'telephone', name: 'telephone' },
             { data: 'categorie', name: 'categorie' },
             { data: 'montant_inscription', name: 'montant_inscription' },
+            { data: 'reste', name: 'reste' },
+            { data: 'etat', name: 'etat' },
+            { data: 'commercial', name: 'commercial' },
             { data: 'actions', name: 'actions', orderable: false, searchable: false, render: function(data, type, row) {
                 return '<div class="btn-group" role="group">' +
                     '<button type="button" class="btn btn-warning text-white btn-sm mr-2" onclick="editParticipant(' + row.id + ')">' +
