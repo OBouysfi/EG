@@ -8,7 +8,7 @@
 
     <main class="main mainheight">
         <div class="container">
-            <div class="col-11 float-right">
+            <div class="col-10 float-right">
                 <ul class="nav nav-tabs justify-content-center nav-adminux nav-lg" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
