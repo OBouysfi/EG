@@ -44,8 +44,15 @@ class PaiementController extends Controller
 
     public function store(StorePaiementRequest $request)
     {
-        Paiement::create($request->validated());
-
+        $validatedData = $request->validated();
+        $paiement = Paiement::create($validatedData);
+    
+        // Update the participant's reste
+        $participant = $paiement->participant;
+        $totalPaiements = $participant->paiements()->sum('montant');
+        $participant->reste = $participant->montant_inscription - $totalPaiements;
+        $participant->save();
+    
         return redirect()->route('paiements.index')->with('success', 'Paiement ajouté avec succès');
     }
 
@@ -62,7 +69,14 @@ class PaiementController extends Controller
     
     public function update(UpdatePaiementRequest $request, Paiement $paiement)
     {
+        $oldMontant = $paiement->montant;
         $paiement->update($request->validated());
+    
+        // Recalculate the participant's reste
+        $participant = $paiement->participant;
+        $totalPaiements = $participant->paiements()->sum('montant');
+        $participant->reste = $participant->montant_inscription - $totalPaiements;
+        $participant->save();
     
         return response()->json([
             'success' => true,
@@ -73,8 +87,14 @@ class PaiementController extends Controller
 
     public function destroy(Paiement $paiement)
     {
+        $participant = $paiement->participant;
         $paiement->delete();
-
+    
+        // Recalculate the participant's reste
+        $totalPaiements = $participant->paiements()->sum('montant');
+        $participant->reste = $participant->montant_inscription - $totalPaiements;
+        $participant->save();
+    
         return response()->json(['message' => 'Paiement supprimé avec succès']);
     }
 }

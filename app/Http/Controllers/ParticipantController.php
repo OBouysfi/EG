@@ -69,8 +69,10 @@ public function filterByCentre($centreId)
 
     public function store(StoreParticipantRequest $request)
     {
-        Participant::create($request->validated());
-
+        $validatedData = $request->validated();
+        $validatedData['reste'] = $validatedData['montant_inscription']; // Initially, reste is the full amount
+        $participant = Participant::create($validatedData);
+    
         return redirect()->route('participants.index')->with('success', 'Participant ajouté avec succès');
     }
 
