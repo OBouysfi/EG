@@ -8,7 +8,7 @@
     .border-top,
     .border-bottom,
     .border-end {
-        border-color: rgba(var(--adminux-theme-bg-rgb), 0.25) !important;
+        border-colo.bg-radial-gradient-theme, .daterangepicker .drp-calendar .calendar-table table td.today, .daterangepicker .drp-calendar .calendar-table table td.in-range.today, .navbar-brand .logo-iconr: rgba(var(--adminux-theme-bg-rgb), 0.25) !important;
     }
 
     a,
@@ -232,19 +232,6 @@
 
 
 .bg-radial-gradient-theme {
-    background: radial-gradient(at 10% 10%, var(--adminux-theme-grad-1) 0%, var(--adminux-theme-grad-2) 48%, var(--adminux-theme-grad-3) 100%);
-    color: var(--adminux-theme-color);
-
-    a,
-    .btn-link {
-        color: var(--adminux-theme-color);
-
-        &:hover,
-        &:focus {
-            color: var(--adminux-theme-color);
-        }
-    }
-
     .btn-light-theme {
         background-color: rgba(var(--adminux-theme-bg-rgb), 0.15);
         color: var(--adminux-theme-color);

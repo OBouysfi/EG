@@ -18,7 +18,7 @@ use App\Models\User;
 //supprimeruser
 Route::delete('/users/{user}', [RolePermissionController::class, 'destroy'])->name('users.destroy');
 
-Route::get('/account', [UserController::class, 'index'])->name('user');
+Route::get('/account', [UserController::class, 'index'])->name('account');
 
 
 Route::middleware(['auth', 'role:super-admin'])->group(function () {

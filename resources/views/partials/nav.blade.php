@@ -11,7 +11,7 @@
             <div class="navbar-brand"> 
                 <!-- Logo icon -->
                 <a href="{{ route('dashboard') }}">
-                    <b class="logo-icon mx-3">
+                    <b class="">
                         <!-- Dark Logo icon -->
                         <img src="{{ asset('assets/images/logo-icon.png') }}" alt="dashboard" class="dark-logo mx-5" />
                         <!-- Light Logo icon -->
@@ -49,7 +49,7 @@
                         <i data-feather="chevron-down" class="svg-icon"></i>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
-                        <a class="dropdown-item" href="">
+                        <a class="dropdown-item" href="{{ route('account') }}">
                             <i data-feather="user" class="svg-icon mr-2 ml-1"></i>
                             Mon Profil
                         </a>
