@@ -23,6 +23,8 @@ Route::get('/account', [UserController::class, 'index'])->name('account');
 Route::get('/', function () {
     return redirect()->route('login');
 });
+Route::get('/profile', [UserController::class, 'index'])->name('profile.index');
+Route::put('/profile/update', [UserController::class, 'update'])->name('profile.update');
 
 Route::middleware(['auth', 'role:super-admin'])->group(function () {
     Route::get('/role-permissions', [RolePermissionController::class, 'index'])->name('role_permissions.index');
