@@ -63,7 +63,7 @@
                             <i data-feather="power" class="svg-icon mr-2 ml-1"></i>
                             Déconnexion
                         </a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        <form id="logout-form" action="{{ route('logout') }}" class="d-none">
                             @csrf
                         </form>
                     </div>
