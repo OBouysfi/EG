@@ -70,7 +70,7 @@
         }
         #lieu_naissance {
             top: 50%;
-            right: 45%;
+            right: 30%;
         }
         #formation {
             top: 45%;
