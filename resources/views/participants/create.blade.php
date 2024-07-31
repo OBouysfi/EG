@@ -40,11 +40,11 @@
                 </div>
                 <div class="form-group">
                     <label for="adresse">Adresse</label>
-                    <input type="text" class="form-control" id="adresse" name="adresse" required>
+                    <input type="text" class="form-control" id="adresse" name="adresse">
                 </div>
                 <div class="form-group">
                     <label for="ville_centre">Ville de Centre</label>
-                    <input type="text" class="form-control" id="ville_centre" name="ville_centre" required>
+                    <input type="text" class="form-control" id="ville_centre" name="ville_centre">
                 </div>
                 <div class="form-group">
                     <label for="telephone">Téléphone</label>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="form-group">
                     <label for="commercial">Commercial</label>
-                    <input type="text" class="form-control" id="commercial" name="commercial" required>
+                    <input type="text" class="form-control" id="commercial" name="commercial" >
                 </div>
                 <div class="form-group">
                     <label for="etat">État</label>
@@ -75,7 +75,7 @@
                 </div>
                 <div class="form-group">
                     <label for="reste">Reste</label>
-                    <input type="number" class="form-control" id="reste" name="reste" step="0.01" required>
+                    <input type="number" class="form-control" id="reste" name="reste" step="0.01" disabled>
                 </div>
                 <button type="submit" class="btn btn-primary">Ajouter</button>
             </form>
