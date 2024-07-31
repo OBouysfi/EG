@@ -109,7 +109,10 @@ public function filterByCentre($centreId)
 
         $paiement = new Paiement($validated);
         $participant->paiements()->save($paiement);
-
+        $participant = $paiement->participant;
+        $totalPaiements = $participant->paiements()->sum('montant');
+        $participant->reste = $participant->montant_inscription - $totalPaiements;
+        $participant->save();
         return response()->json(['message' => 'Paiement ajouté avec succès']);
     }
 
