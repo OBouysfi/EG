@@ -20,6 +20,9 @@ Route::delete('/users/{user}', [RolePermissionController::class, 'destroy'])->na
 
 Route::get('/account', [UserController::class, 'index'])->name('account');
 
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 
 Route::middleware(['auth', 'role:super-admin'])->group(function () {
     Route::get('/role-permissions', [RolePermissionController::class, 'index'])->name('role_permissions.index');
