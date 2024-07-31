@@ -35,4 +35,9 @@ class Participant extends Model
     {
         return $this->hasMany(Attestation::class);
     }
+
+    public function getPaiementBySeance($seance)
+    {
+        return $this->paiements->where('seance', $seance)->first();
+    }
 }

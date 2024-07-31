@@ -21,8 +21,8 @@
         border-radius: 8px !important;
     }
     .table thead th {
-    white-space: nowrap;
-    border-right: 3px solid #ffffff;
+        white-space: nowrap;
+        border-right: 3px solid #ffffff;
     }
     .table thead tr {
         background: linear-gradient(to right, #8971ea, #7f72ea, #7574ea, #6a75e9, #5f76e8);
@@ -140,6 +140,11 @@
                                     <th scope="col">Téléphone</th>
                                     <th scope="col">Catégorie</th>
                                     <th scope="col">Montant Inscription</th>
+                                    <th scope="col">S1</th>
+                                    <th scope="col">S2</th>
+                                    <th scope="col">S3</th>
+                                    <th scope="col">S4</th>
+                                    <th scope="col">Centre Paiement</th>
                                     <th scope="col">Reste</th>
                                     <th scope="col">Commercial</th>
                                     <th scope="col">État</th>
@@ -185,6 +190,11 @@ $(document).ready(function() {
             { data: 'telephone', name: 'telephone' },
             { data: 'categorie', name: 'categorie' },
             { data: 'montant_inscription', name: 'montant_inscription' },
+            { data: 's1', name: 's1' },
+            { data: 's2', name: 's2' },
+            { data: 's3', name: 's3' },
+            { data: 's4', name: 's4' },
+            { data: 'centre_paiement', name: 'centre_paiement' },
             { data: 'reste', name: 'reste' },
             { data: 'etat', name: 'etat' },
             { data: 'commercial', name: 'commercial' },
@@ -269,7 +279,7 @@ $(document).ready(function() {
     `;
 
         var printWindow = window.open('', '', 'height=800,width=1100');
-        printWindow.document.write('<html><head><title></title>');
+        printWindow.document.write('<html><head><title>Participants</title>');
         printWindow.document.write('<style>' + css + '</style>');
         printWindow.document.write('</head><body >');
         printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Participants</h3>');

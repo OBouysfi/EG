@@ -26,28 +26,44 @@ class ParticipantController extends Controller
     
 
     public function data(Request $request)
-{
-    $query = Participant::with('centre')->select('participants.*');
-
+    {
+        $query = Participant::with('centre', 'paiements')->select('participants.*');
+    
         if ($request->has('centre_id') && $request->centre_id != '') {
             $query->where('centre_id', $request->centre_id);
         }
-
+    
         if ($request->has('region_id') && $request->region_id != '') {
             $query->whereHas('centre', function ($q) use ($request) {
                 $q->where('region_id', $request->region_id);
             });
         }
-
-    return DataTables::of($query)
-        ->addColumn('centre', function ($participant) {
-            return $participant->centre ? $participant->centre->name : '-';
-        })
-        ->addColumn('actions', function ($participant) {
-            return view('participants.actions', compact('participant'))->render();
-        })
-        ->make(true);
-}
+    
+        return DataTables::of($query)
+            ->addColumn('s1', function ($participant) {
+                return optional($participant->getPaiementBySeance('S1'))->montant ?? '-';
+            })
+            ->addColumn('s2', function ($participant) {
+                return optional($participant->getPaiementBySeance('S2'))->montant ?? '-';
+            })
+            ->addColumn('s3', function ($participant) {
+                return optional($participant->getPaiementBySeance('S3'))->montant ?? '-';
+            })
+            ->addColumn('s4', function ($participant) {
+                return optional($participant->getPaiementBySeance('S4'))->montant ?? '-';
+            })
+            ->addColumn('centre_paiement', function ($participant) {
+                return optional($participant->getPaiementBySeance('Centre'))->montant ?? '-';
+            })
+            ->addColumn('centre_name', function ($participant) {
+                return $participant->centre ? $participant->centre->name : '-';
+            })
+            ->addColumn('actions', function ($participant) {
+                return view('participants.actions', compact('participant'))->render();
+            })
+            ->make(true);
+    }
+    
 public function filterByCentre($centreId)
     {
         $centres = Centre::all();
