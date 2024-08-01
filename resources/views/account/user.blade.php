@@ -31,7 +31,7 @@
                                             <label>Nom</label>
                                         </div>
                                     </div>
-                                    <div class="invalid-feedback">Please enter valid input</div>
+                                    <div class="invalid-feedback">Veuillez entrer un nom valide</div>
                                 </div>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="form-group my-2 position-relative check-valid">
@@ -40,12 +40,25 @@
                                             <label>Email</label>
                                         </div>
                                     </div>
-                                    <div class="invalid-feedback">Please enter valid input</div>
+                                    <div class="invalid-feedback">Veuillez entrer un email valide</div>
                                 </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="form-group my-2 position-relative">
+                                        <div class="form-floating">
+                                            <input id="password" type="password" name="password" placeholder="Mot de passe" class="form-control">
+                                            <label for="password">Mot de passe</label>
+                                            <span id="togglePassword" class="position-absolute end-0 top-30 translate-middle-y me-3">
+                                                <i id="passwordIcon" class="bi bi-eye"></i>
+                                            </span>
+                                        </div>
+                                  
+                            
+                                <div class="invalid-feedback">Entrer un mot de passe valide s'il vous plait</div>
+                            </div>
                             </div>
                             <div class="row justify-content-center">
                                 <div class="col-auto">
-                                    <button type="submit" class="btn btn-primary">Sauvegarder les modifications</button>
+                                    <button type="submit" class="btn btn-primary">Modifer</button>
                                 </div>
                                 @if(session('success'))
                              <div class="alert alert-success">
@@ -62,6 +75,28 @@
     @endsection
 
 @section('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordInput = document.getElementById('password');
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordIcon = document.getElementById('passwordIcon');
+    
+        togglePassword.addEventListener('click', function () {
+            // Toggle the type attribute
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+    
+            // Toggle the eye icon
+            if (type === 'password') {
+                passwordIcon.classList.remove('bi-eye-slash');
+                passwordIcon.classList.add('bi-eye');
+            } else {
+                passwordIcon.classList.remove('bi-eye');
+                passwordIcon.classList.add('bi-eye-slash');
+            }
+        });
+    });
+    </script>
 <!-- Required jquery and libraries -->
 <script src="{{asset('assets_custom/js/jquery-3.3.1.min.js')}}"></script>
 <script src="{{asset('assets_custom/js/popper.min.js')}}"></script>
