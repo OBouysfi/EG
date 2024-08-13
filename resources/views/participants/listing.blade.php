@@ -169,6 +169,17 @@
 @section('js')
 <script>
 $(document).ready(function() {
+    var centreId = "{{ isset($centreId) ? $centreId : '' }}";
+    var regionId = "{{ isset($regionId) ? $regionId : '' }}";
+
+    // Set the filter values if they are present
+    if (centreId) {
+        $('#centreFilter').val(centreId);
+    }
+    if (regionId) {
+        $('#regionFilter').val(regionId);
+    }
+
     var table = $('#participants-table').DataTable({
         processing: true,
         serverSide: true,
@@ -237,131 +248,10 @@ $(document).ready(function() {
         }
     });
 
-    $('#addPaymentForm').on('submit', function(e) {
-        e.preventDefault();
-        var form = $(this);
-        var url = form.attr('action');
-
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: form.serialize(),
-            success: function(response) {
-                $('#addPaymentModal').modal('hide');
-                table.ajax.reload();
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Succès',
-                    text: response.message,
-                });
-            },
-            error: function(xhr) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur',
-                    text: 'Une erreur est survenue lors de l\'ajout du paiement.',
-                });
-            }
-        });
-    });
-
     $('#centreFilter, #regionFilter').change(function() {
         table.ajax.reload();
     });
-
-    $('#printButton').on('click', function() {
-        var css = `
-        @page { size: auto; margin: 20mm; }
-        body { zoom: 40%; -webkit-transform: scale(1); transform: scale(1); -webkit-transform-origin: 0 0; transform-origin: 0 0; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 5px; text-align: left; border: 1px solid #ddd; }
-        th { background-color: #003F54; color: #fff; }
-    `;
-
-        var printWindow = window.open('', '', 'height=800,width=1100');
-        printWindow.document.write('<html><head><title>Participants</title>');
-        printWindow.document.write('<style>' + css + '</style>');
-        printWindow.document.write('</head><body >');
-        printWindow.document.write('<h3 class="mb-0 text-dark">Liste des Participants</h3>');
-
-        var tableClone = $('#participants-table').clone();
-
-        // Remove columns that have no data
-        var emptyColumns = [];
-        tableClone.find('thead th').each(function(index) {
-            var isEmpty = true;
-            tableClone.find('tbody tr').each(function() {
-                if ($(this).find('td').eq(index).text().trim() !== '') {
-                    isEmpty = false;
-                    return false;
-                }
-            });
-            if (isEmpty) {
-                emptyColumns.push(index);
-            }
-        });
-
-        // Remove the empty columns and the "Actions" column
-        emptyColumns.push(tableClone.find('thead th:contains("Actions")').index());
-
-        tableClone.find('thead th').each(function(index) {
-            if (emptyColumns.includes(index)) {
-                $(this).remove();
-            }
-        });
-
-        tableClone.find('tbody tr').each(function() {
-            $(this).find('td').each(function(index) {
-                if (emptyColumns.includes(index)) {
-                    $(this).remove();
-                }
-            });
-        });
-
-        printWindow.document.write(tableClone.prop('outerHTML'));
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.focus();
-        printWindow.print();
-    });
-
-    $('#editParticipantForm').on('submit', function(e) {
-        e.preventDefault();
-        var id = $('#editParticipantModal').data('id');
-        var formData = $(this).serialize();
-
-        $.ajax({
-            url: '/participants/' + id,
-            type: 'PUT',
-            data: formData,
-            success: function(response) {
-                $('#editParticipantModal').modal('hide');
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Succès',
-                    text: response.message,
-                });
-                table.ajax.reload();
-            },
-            error: function(response) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erreur',
-                    text: response.responseJSON.message,
-                });
-            }
-        });
-    });
-
-    @if(session('success'))
-        Swal.fire({
-            icon: 'success',
-            title: 'Succès',
-            text: "{{ session('success') }}",
-        });
-    @endif
 });
-
 function deleteParticipant(participantId) {
     Swal.fire({
         title: 'Êtes-vous sûr?',
