@@ -57,12 +57,12 @@
             font-weight: 700;
         }
         #nom {
-            top: 41%;
-            left: 13%;
+            top: 45%;
+            left: 40%;
         }
         #cin {
-            top: 44%;
-            left: 14%;
+            top: 45%;
+            left: 20%;
         }
         #date_naissance {
             top: 50%;
@@ -87,12 +87,13 @@
             bottom: 30%;
             left: 20%;
         }
+        
     </style>
 </head>
 <body>
     <div class="background"></div>
-    <div id="nom" class="field">{{ $participant->nom_prenom }}</div>
-    <div id="cin" class="field">{{ $participant->numero_cin }}</div>
+    <div id="nom" class="field">NOM COMPLET:  {{ $participant->nom_prenom }}</div>
+    <div id="cin" class="field">CIN:  {{ $participant->numero_cin }}</div>
     <div id="date_naissance" class="field">{{ $participant->date_naissance }}</div>
     <div id="lieu_naissance" class="field">{{ $participant->ville_naissance }}</div>
     <div id="annee" class="field">{{ $participant->created_at->format('Y') }}</div>
