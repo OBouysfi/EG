@@ -58,11 +58,11 @@
         }
         #nom {
             top: 45%;
-            left: 40%;
+            left: 30%;
         }
         #cin {
             top: 45%;
-            left: 20%;
+            left: 60%;
         }
         #date_naissance {
             top: 50%;
@@ -92,7 +92,7 @@
 </head>
 <body>
     <div class="background"></div>
-    <div id="nom" class="field">NOM COMPLET:  {{ $participant->nom_prenom }}</div>
+    <div id="nom" class="field">{{ $participant->nom_prenom }}</div>
     <div id="cin" class="field">CIN:  {{ $participant->numero_cin }}</div>
     <div id="date_naissance" class="field">{{ $participant->date_naissance }}</div>
     <div id="lieu_naissance" class="field">{{ $participant->ville_naissance }}</div>

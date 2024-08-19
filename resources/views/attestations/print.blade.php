@@ -68,8 +68,8 @@
         /* Styling for date and center information */
         #p-center {
             position: absolute;
-            top: 600px; /* Adjust this value to change the vertical position */
-            left: 45%;
+            top: 575px; /* Adjust this value to change the vertical position */
+            left: 50%;
             transform: translateX(-50%);
             font-size: 18px;
         }
@@ -77,7 +77,7 @@
         /* Styling for category information */
         #p-categ {
             position: absolute;
-            top: 635px; /* Adjust this value to change the vertical position */
+            top: 610px; /* Adjust this value to change the vertical position */
             left: 45%;
             transform: translateX(-50%);
             font-size: 18px;
