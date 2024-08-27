@@ -84,6 +84,7 @@
                         </li>
                     </ul>
                 </li>
+                
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Authentication</span></li>
                 <li class="sidebar-item">
@@ -101,6 +102,21 @@
                 </li>
                 @endif
 
+                <!-- New Paramétrage Section -->
+                <li class="list-divider"></li>
+                <li class="nav-small-cap"><span class="hide-menu">Paramétrage</span></li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link" href="{{ route('parametre.attestation') }}" aria-expanded="false">
+                        <i data-feather="file-text" class="feather-icon"></i>
+                        <span class="hide-menu">Paramètre Attestation</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link" aria-expanded="false">
+                        <i data-feather="file" class="feather-icon"></i>
+                        <span class="hide-menu">Paramètre Diplôme</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- End Sidebar navigation-->

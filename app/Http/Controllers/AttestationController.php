@@ -87,4 +87,33 @@ class AttestationController extends Controller
         $participant = Participant::findOrFail($participantId);
         return view('attestations.print', compact('participant'));
     }
+
+
+
+    public function updateImage(Request $request)
+{
+    $request->validate([
+        'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    // Path to the old image
+    $oldImagePath = public_path('assets/img/attestation.png');
+
+    // Delete the old image if it exists
+    if (file_exists($oldImagePath)) {
+        unlink($oldImagePath);
+    }
+
+    // Upload the new image
+    $imageName = 'attestation.png'; // Keep the name the same
+    $request->image->move(public_path('assets/img'), $imageName);
+
+    return redirect()->back()->with('success', 'Attestation image updated successfully!');
+}
+public function attestation()
+{
+    // Logic for displaying the attestation settings view
+    return view('parametrage.attestation');
+}
+
 }

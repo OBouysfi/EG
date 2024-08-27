@@ -20,6 +20,13 @@ Route::delete('/users/{user}', [RolePermissionController::class, 'destroy'])->na
 
 Route::get('/account', [UserController::class, 'index'])->name('account');
 
+
+Route::middleware(['auth', 'role:super-admin'])->prefix('parametrage')->name('parametre.')->group(function () {
+    Route::get('attestation', [AttestationController::class, 'attestation'])->name('attestation');
+    Route::post('attestation/update-image', [AttestationController::class, 'updateImage'])->name('attestation.update_image');
+});
+
+
 Route::get('/', function () {
     return redirect()->route('login');
 });
