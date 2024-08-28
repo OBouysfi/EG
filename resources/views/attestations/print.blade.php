@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +25,7 @@
                 max-height: 297mm;
                 overflow: hidden;
                 page-break-inside: avoid;
+                position: relative;
             }
 
             .no-print {
@@ -45,12 +46,10 @@
 
         .container {
             position: relative;
-            width: 100%;
-            height: 100%;
-            max-width: 210mm; /* A4 width in millimeters */
-            max-height: 297mm; /* A4 height in millimeters */
+            width: 210mm; /* Fixe la largeur à celle d'une feuille A4 */
+            height: 297mm; /* Fixe la hauteur à celle d'une feuille A4 */
             overflow: hidden;
-            border: 1px solid #ddd; /* Just to visualize the boundaries */
+            border: 1px solid #ddd; /* Juste pour visualiser les bordures */
         }
 
         .background-image {
