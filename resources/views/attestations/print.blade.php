@@ -42,6 +42,7 @@
             justify-content: center;
             align-items: center;
             background: none;
+            position: relative;
         }
 
         .container {
@@ -96,9 +97,75 @@
         #p-categ {
             top: 80%;
         }
+
+        .btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #fff;
+            background-color: #17a2b8;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+        }
+
+        .btn:hover {
+            background-color: #138496;
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn .icon {
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .guide-popup {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            z-index: 20;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .guide-popup .close-btn {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .guide-popup .close-btn:hover {
+            background-color: #d32f2f;
+        }
     </style>
 </head>
 <body>
+    <div class="guide-popup">
+        <p>1. Glissez les informations à la bonne position.<br>2. Cliquez sur le bouton <strong>Imprimer</strong> pour générer l'attestation.</p>
+        <button class="close-btn" onclick="closeGuide()">Fermer</button>
+    </div>
+
     <div class="container">
         <img src="{{ asset('assets/img/attestation.png') }}" class="background-image">
 
@@ -109,10 +176,16 @@
         </div>
     </div>
     <div class="no-print">
-        <button class="btn btn-info" onclick="printAttestation()">Imprimer</button>
+        <button class="btn btn-info" onclick="printAttestation()">
+            Imprimer
+        </button>
     </div>
 
     <script>
+        function closeGuide() {
+            document.querySelector('.guide-popup').style.display = 'none';
+        }
+
         const draggables = document.querySelectorAll('.draggable');
 
         draggables.forEach(draggable => {
