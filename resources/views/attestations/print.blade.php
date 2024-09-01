@@ -163,7 +163,7 @@
 <body>
     <div class="guide-popup">
         <p>1. Glissez les informations à la bonne position.<br>2. Cliquez sur le bouton <strong>Imprimer</strong> pour générer l'attestation.</p>
-        <button class="close-btn" onclick="closeGuide()">Fermer</button>
+        <button class="close-btn" onclick="closeGuide()">Fermer</button> 
     </div>
 
     <div class="container">
