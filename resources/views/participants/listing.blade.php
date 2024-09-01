@@ -344,9 +344,9 @@ function printDiplome(participantId) {
 
 function printAttestation(participantId) {
     var printWindow = window.open('/attestations/' + participantId + '/print', '_blank');
-    printWindow.onload = function() {
+    /* printWindow.onload = function() {
         printWindow.print();
-    };
+    }; */
 }
 
 </script>
