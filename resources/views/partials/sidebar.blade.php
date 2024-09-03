@@ -99,7 +99,24 @@
                         <span class="hide-menu">Diplôme</span>
                     </a>
                 </li>
-
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link" href="{{ route('software.update') }}" aria-expanded="false">
+                        <i data-feather="refresh-cw" class="feather-icon"></i>
+                        <span class="hide-menu">Mise à Jour Logicielle</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link" href="{{ route('support.contact') }}" aria-expanded="false">
+                        <i data-feather="life-buoy" class="feather-icon"></i>
+                        <span class="hide-menu">Support</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link sidebar-link" href="{{ route('support.contact') }}" aria-expanded="false">
+                        <i data-feather="archive" class="feather-icon"></i>
+                        <span class="hide-menu">Backup</span>
+                    </a>
+                </li>
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Authentication</span></li>
                 @if(auth()->user()->hasRole('super-admin'))

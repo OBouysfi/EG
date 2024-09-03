@@ -10,8 +10,11 @@ use App\Http\Controllers\PaiementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttestationController;
 use App\Http\Controllers\DiplomeController;
+use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\SoftwareUpdateController;
+use App\Http\Controllers\SupportController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 
@@ -138,4 +141,22 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['permission:manage certificates'])->prefix('attestations')->name('attestations.')->group(function () {
         Route::get('{participant}/print', [AttestationController::class, 'print'])->name('print');
     });
+
+
+    // License Routes 
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/licenses', [LicenseController::class, 'index'])->name('licenses.index');
+        Route::get('/licenses/create', [LicenseController::class, 'create'])->name('licenses.create');
+        Route::post('/licenses', [LicenseController::class, 'store'])->name('licenses.store');
+        Route::get('/licenses/{license}/edit', [LicenseController::class, 'edit'])->name('licenses.edit');
+        Route::put('/licenses/{license}', [LicenseController::class, 'update'])->name('licenses.update');
+        Route::delete('/licenses/{license}', [LicenseController::class, 'destroy'])->name('licenses.destroy');
+    });
+
+  // Support Routes 
+  Route::middleware(['auth'])->group(function () {
+    Route::get('/software-update', [SoftwareUpdateController::class, 'index'])->name('software.update');
+    Route::get('/support/contact', [SupportController::class, 'contact'])->name('support.contact');
+    Route::post('/support/send', [SupportController::class, 'send'])->name('support.send');
+});
 });
