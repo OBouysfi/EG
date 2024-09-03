@@ -87,14 +87,14 @@ class DiplomeController extends Controller
         $participant = Participant::findOrFail($participantId);
         return view('diplomes.print', compact('participant'));
     }
-public function updateDiplomeImage(Request $request)
+public function updateImage(Request $request)
 {
     $request->validate([
         'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
     // Path to the old image
-    $oldImagePath = public_path('assets/img/diplome.png');
+    $oldImagePath = public_path('assets/img/diplome.jpg');
 
     // Delete the old image if it exists
     if (file_exists($oldImagePath)) {
@@ -102,7 +102,7 @@ public function updateDiplomeImage(Request $request)
     }
 
     // Upload the new image
-    $imageName = 'diplome.png'; // Keep the name the same
+    $imageName = 'diplome.jpg'; // Keep the name the same
     $request->image->move(public_path('assets/img'), $imageName);
 
     return redirect()->back()->with('success', 'Diplome image updated successfully!');
