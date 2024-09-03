@@ -25,9 +25,16 @@ Route::get('/account', [UserController::class, 'index'])->name('account');
 
 
 Route::middleware(['auth', 'role:super-admin'])->prefix('parametrage')->name('parametre.')->group(function () {
+    // Attestation Routes
     Route::get('attestation', [AttestationController::class, 'attestation'])->name('attestation');
     Route::post('attestation/update-image', [AttestationController::class, 'updateImage'])->name('attestation.update_image');
+    
+    // Diplome Routes
+    Route::get('diplome', [DiplomeController::class, 'diplome'])->name('diplome');
+    Route::post('diplome/update-image', [DiplomeController::class, 'updateImage'])->name('diplome.update_image');
+    
 });
+
 
 
 Route::get('/', function () {

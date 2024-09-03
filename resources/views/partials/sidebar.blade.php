@@ -94,7 +94,7 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" aria-expanded="false">
+                    <a class="sidebar-link sidebar-link" href="{{ route('parametre.diplome') }}" aria-expanded="false">
                         <i data-feather="file" class="feather-icon"></i>
                         <span class="hide-menu">Diplôme</span>
                     </a>
