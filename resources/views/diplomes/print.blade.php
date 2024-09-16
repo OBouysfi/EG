@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,23 +16,26 @@
                 print-color-adjust: exact;
                 margin: 0;
                 padding: 0;
-                height: 100%;
-                width: 100%;
+                height: 210mm;
+                width: 297mm;
             }
 
             .background {
-                background: url('{{ asset('assets/img/diplome.jpg') }}') no-repeat center center;
+                width: 297mm;
+                height: 210mm;
                 background-size: cover;
                 position: fixed;
                 top: 0;
                 left: 0;
-                width: 100%;
-                height: 100%;
                 z-index: -1;
             }
 
             .no-print {
                 display: none;
+            }
+
+            .field {
+                position: absolute !important;
             }
         }
 
@@ -44,19 +47,18 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
             position: relative;
             overflow: hidden;
         }
 
         .background {
+            width: 297mm;
+            height: 210mm;
             background: url('{{ asset('assets/img/diplome.jpg') }}') no-repeat center center;
             background-size: cover;
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
             z-index: -1;
         }
 
@@ -126,9 +128,45 @@
         .no-print button:hover {
             background-color: #0056b3;
         }
+
+        .guide-popup {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            z-index: 20;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .guide-popup .close-btn {
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .guide-popup .close-btn:hover {
+            background-color: #d32f2f;
+        }
     </style>
 </head>
 <body>
+    <div class="guide-popup">
+        <p>1. Glissez les informations à la bonne position.<br>2. Cliquez sur le bouton <strong>Imprimer</strong> pour générer le diplôme.</p>
+        <button class="close-btn" onclick="closeGuide()">Fermer</button> 
+    </div>
+
     <div class="background"></div>
 
     <div id="nom" class="field">{{ $participant->nom_prenom }}</div>
@@ -144,6 +182,10 @@
     </div>
 
     <script>
+        function closeGuide() {
+            document.querySelector('.guide-popup').style.display = 'none';
+        }
+
         const fields = document.querySelectorAll('.field');
 
         fields.forEach(field => {
@@ -155,7 +197,6 @@
                     let newX = event.clientX - initialX;
                     let newY = event.clientY - initialY;
 
-                    // Prevent moving out of bounds
                     const rect = field.getBoundingClientRect();
                     if (newX < 0) newX = 0;
                     if (newY < 0) newY = 0;

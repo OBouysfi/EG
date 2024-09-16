@@ -112,11 +112,12 @@
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link sidebar-link" href="{{ route('support.contact') }}" aria-expanded="false">
-                        <i data-feather="archive" class="feather-icon"></i>
-                        <span class="hide-menu">Backup</span>
+                    <a class="sidebar-link sidebar-link" href="{{ route('backups.index') }}" aria-expanded="false">
+                        <i data-feather="database" class="feather-icon"></i>
+                        <span class="hide-menu">Backups</span>
                     </a>
                 </li>
+                
                 <li class="list-divider"></li>
                 <li class="nav-small-cap"><span class="hide-menu">Authentication</span></li>
                 @if(auth()->user()->hasRole('super-admin'))

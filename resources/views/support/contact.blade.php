@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" style="margin-top: 100px; color:black;">
+   <div class="page-wrapper">
+    <div class="container-fluid" style="margin-top: 70px; color:black;">
         <h1>Contactez le Support</h1>
         <p>Pour toute assistance, veuillez remplir le formulaire ci-dessous ou nous envoyer un e-mail à support@continuum.ma</p>
 
@@ -36,6 +37,7 @@
             <button type="submit" class="btn btn-primary">Envoyer</button>
         </form>
     </div>
+   </div>
 @endsection
 
 @section('scripts')

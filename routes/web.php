@@ -9,6 +9,7 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\PaiementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttestationController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\DiplomeController;
 use App\Http\Controllers\LicenseController;
 use App\Http\Controllers\ProfileController;
@@ -161,9 +162,17 @@ Route::middleware(['auth'])->group(function () {
     });
 
   // Support Routes 
-  Route::middleware(['auth'])->group(function () {
-    Route::get('/software-update', [SoftwareUpdateController::class, 'index'])->name('software.update');
-    Route::get('/support/contact', [SupportController::class, 'contact'])->name('support.contact');
-    Route::post('/support/send', [SupportController::class, 'send'])->name('support.send');
-});
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/software-update', [SoftwareUpdateController::class, 'index'])->name('software.update');
+        Route::get('/support/contact', [SupportController::class, 'contact'])->name('support.contact');
+        Route::post('/support/send', [SupportController::class, 'send'])->name('support.send');
+    });
+
+    // Backup Routes
+
+    Route::get('/backups', [BackupController::class, 'index'])->name('backups.index');
+    Route::post('/backups/create', [BackupController::class, 'create'])->name('backups.create');
+    Route::get('/backups/download/{file_name}', [BackupController::class, 'download'])->name('backups.download');
+    Route::delete('/backups/delete/{file_name}', [BackupController::class, 'delete'])->name('backups.delete');
+
 });
