@@ -174,7 +174,7 @@
     <div id="date_naissance" class="field">{{ $participant->date_naissance }}</div>
     <div id="lieu_naissance" class="field">{{ $participant->ville_naissance }}</div>
     <div id="formation" class="field">{{ $participant->formation }}</div>
-    <div id="annee" class="field">{{ $participant->created_at->format('Y') }}</div>
+    <div id="annee" class="field">2024/2025</div>
     <div id="date_delivrance" class="field">{{ $participant->created_at->format('d/m/Y') }}</div>
 
     <div class="no-print">
