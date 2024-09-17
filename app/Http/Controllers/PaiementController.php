@@ -18,23 +18,27 @@ class PaiementController extends Controller
     }
 
     public function data()
-    {
-        $paiements = Paiement::with('participant')->select('paiements.*');
+{
+    // Filtrer les paiements dont les participants ne sont pas soft deleted
+    $paiements = Paiement::whereHas('participant', function($query) {
+        $query->whereNull('deleted_at'); // Exclure les participants soft deleted
+    })->with('participant')->select('paiements.*');
 
-        return DataTables::of($paiements)
-            ->addColumn('participant', function ($paiement) {
-                return $paiement->participant->nom_prenom;
-            })
-            ->addColumn('actions', function ($paiement) {
-                return '<div class="btn-group" role="group">' .
-                       '<button type="button" class="btn btn-warning btn-sm" onclick="editPaiement(' . $paiement->id . ')">' .
-                       '<i class="fa fa-edit"></i></button>' .
-                       '<button type="button" class="btn btn-danger btn-sm" onclick="deletePaiement(' . $paiement->id . ')">' .
-                       '<i class="fa fa-trash"></i></button></div>';
-            })
-            ->rawColumns(['actions'])
-            ->make(true);
-    }
+    return DataTables::of($paiements)
+        ->addColumn('participant', function ($paiement) {
+            return $paiement->participant ? $paiement->participant->nom_prenom : '<span class="text-danger">Aucun participant</span>';
+        })
+        ->addColumn('actions', function ($paiement) {
+            return '<div class="btn-group" role="group">' .
+                '<button type="button" class="btn btn-warning btn-sm" onclick="editPaiement(' . $paiement->id . ')">' .
+                '<i class="fa fa-edit"></i></button>' .
+                '<button type="button" class="btn btn-danger btn-sm" onclick="deletePaiement(' . $paiement->id . ')">' .
+                '<i class="fa fa-trash"></i></button></div>';
+        })
+        ->rawColumns(['actions', 'participant']) // Include 'participant' to allow raw HTML
+        ->make(true);
+}
+
     public function create()
     {
         $participants = Participant::all();
